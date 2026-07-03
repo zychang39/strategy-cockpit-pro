@@ -1,0 +1,34 @@
+# 論述目標價（三情境）— 初始值由 fetch.py 以建置時現價自動生成，僅為佔位。
+# base = 現價 × 主題倍數；bull = base × 1.35；bear = 現價 × 0.75。
+# 請依自己的研究隨時修改。thesis_expiry 到期未兌現 → 前端標灰提醒重估。
+targets:
+  MU: {bear: 731.67, base: 1365.78, bull: 1843.8, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 975.56 × 1.4（memory_hdd）
+  SNDK: {bear: 1308.75, base: 2443.0, bull: 3298.05, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1745.0 × 1.4（memory_hdd）
+  STX: {bear: 615.12, base: 1148.22, bull: 1550.1, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 820.16 × 1.4（memory_hdd）
+  WDC: {bear: 404.25, base: 754.6, bull: 1018.71, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 539.0 × 1.4（memory_hdd）
+  285A.T: {bear: 57195.0, base: 106764.0, bull: 144131.4, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 76260.0 × 1.4（memory_hdd）
+  6981.T: {bear: 8156.25, base: 14681.25, bull: 19819.69, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 10875.0 × 1.35（mlcc）
+  2327.TW: {bear: 791.25, base: 1424.25, bull: 1922.74, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1055.0 × 1.35（mlcc）
+  AMAT: {bear: 452.28, base: 753.8, bull: 1017.63, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 603.04 × 1.25（equipment）
+  ONTO: {bear: 230.69, base: 384.47, bull: 519.03, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 307.58 × 1.25（equipment）
+  ASML: {bear: 1326.99, base: 2211.65, bull: 2985.73, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1769.3199 × 1.25（equipment）
+  UCTT: {bear: 79.86, base: 133.1, bull: 179.69, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 106.48 × 1.25（equipment）
+  KLIC: {bear: 91.0, base: 151.66, bull: 204.74, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 121.33 × 1.25（equipment）
+  2330.TW: {bear: 1848.75, base: 2958.0, bull: 3993.3, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 2465.0 × 1.2（default）
+  2454.TW: {bear: 3258.75, base: 5214.0, bull: 7038.9, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 4345.0 × 1.2（default）
+  GLW: {bear: 147.59, base: 236.15, bull: 318.8, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 196.79 × 1.2（default）
+  INTC: {bear: 90.26, base: 144.42, bull: 194.97, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 120.35 × 1.2（default）
+  TER: {bear: 276.82, base: 553.63, bull: 747.4, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 369.09 × 1.5（cpo）
+  LITE: {bear: 546.24, base: 1092.48, bull: 1474.85, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 728.32 × 1.5（cpo）
+  COHR: {bear: 250.02, base: 500.04, bull: 675.05, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 333.36 × 1.5（cpo）
+  GOOGL: {bear: 269.93, base: 467.88, bull: 631.64, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 359.91 × 1.3（csp）
+  AMZN: {bear: 182.0, base: 315.47, bull: 425.88, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 242.67 × 1.3（csp）
+  MRVL: {bear: 183.97, base: 367.94, bull: 496.72, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 245.29 × 1.5（google_chain）
+  ALAB: {bear: 304.81, base: 609.63, bull: 823.0, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 406.42 × 1.5（google_chain）
+  NVDA: {bear: 146.12, base: 253.28, bull: 341.93, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 194.83 × 1.3（csp）
+  AMKR: {bear: 52.24, base: 104.48, bull: 141.05, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 69.65 × 1.5（cpo）
+  6187.TWO: {bear: 753.75, base: 1507.5, bull: 2035.13, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1005.0 × 1.5（cpo）
+  6223.TWO: {bear: 5441.25, base: 10882.5, bull: 14691.38, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 7255.0 × 1.5（cpo）
+  2308.TW: {bear: 1477.5, base: 2364.0, bull: 3191.4, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1970.0 × 1.2（default）
+  WOLF: {bear: 30.0, base: 48.0, bull: 64.8, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 40.0 × 1.2（default）
+  BB: {bear: 8.63, base: 20.72, bull: 27.97, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 11.51 × 1.8（bb）
