@@ -1,5 +1,5 @@
 // Service Worker — 殼層 cache-first、資料 network-first（離線回退最後一份）
-const VERSION = "scp-v1";
+const VERSION = "scp-v2";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
@@ -18,8 +18,8 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
 
-  if (url.pathname.includes("/data/")) {
-    // 資料：network-first，離線退回快取（前端會顯示資料時間，不會誤導）
+  if (url.pathname.includes("/data/") || e.request.mode === "navigate") {
+    // 資料與頁面導覽：network-first，離線退回快取（改版立即生效）
     e.respondWith(
       fetch(e.request)
         .then((res) => {
