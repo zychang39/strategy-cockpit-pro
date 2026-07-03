@@ -1,0 +1,171 @@
+# 四階段配置表 — 前端依日期自動選階段，可手動切換。
+# theme_key 對應 settings.yaml 的 targets_multipliers（生成初始目標價用）。
+# weight 合計含現金 = 1.0；主題內個股等權重分配。
+phases:
+  - id: 1
+    name: 階段①
+    start: 2026-07-03
+    end: 2026-09-30
+    themes:
+      - name: 記憶體/HDD
+        theme_key: memory_hdd
+        weight: 0.30
+        tickers: [MU, SNDK, STX, WDC, 285A.T]
+        hold: 12–24月
+        exit: HDD 報價 < $22/TB 或缺口收窄
+      - name: MLCC
+        theme_key: mlcc
+        weight: 0.20
+        tickers: [6981.T, 2327.TW]
+        hold: 12–18月
+        exit: 提早擴產宣布或需求斷
+      - name: 半導體設備
+        theme_key: equipment
+        weight: 0.18
+        tickers: [AMAT, ONTO, ASML, UCTT, KLIC]
+        hold: 6–12月
+        exit: 台積電 CAPEX 指引下修
+      - name: 台股核心
+        theme_key: default
+        weight: 0.17
+        tickers: [2330.TW, 2454.TW]
+        hold: 12–24月
+        exit: 個股破季線且論述惡化
+      - name: 光纖/其他
+        theme_key: default
+        weight: 0.10
+        tickers: [GLW, INTC]
+        hold: 6–12月
+        exit: ""
+      - name: 現金
+        weight: 0.05
+        tickers: []
+        hold: ""
+        exit: 留給 TER 財報回檔
+  - id: 2
+    name: 階段②
+    start: 2026-10-01
+    end: 2027-03-31
+    themes:
+      - name: 記憶體/HDD
+        theme_key: memory_hdd
+        weight: 0.25
+        tickers: [MU, SNDK, STX, WDC]
+        hold: 續抱
+        exit: HDD 報價 < $22/TB 或缺口收窄
+      - name: MLCC
+        theme_key: mlcc
+        weight: 0.18
+        tickers: [6981.T, 2327.TW]
+        hold: 續抱
+        exit: 提早擴產宣布或需求斷
+      - name: 設備
+        theme_key: equipment
+        weight: 0.15
+        tickers: [AMAT, ONTO, UCTT]
+        hold: 續抱
+        exit: 台積電 CAPEX 指引下修
+      - name: TER 財報回檔建倉
+        theme_key: cpo
+        weight: 0.12
+        tickers: [TER]
+        hold: 9–15月
+        exit: 事件型：財報弱勢後分批
+      - name: 光通訊回補
+        theme_key: cpo
+        weight: 0.12
+        tickers: [LITE, COHR]
+        hold: 9–15月
+        exit: 回檔至估值錨才進
+      - name: CSP 觸發倉
+        theme_key: csp
+        weight: 0.13
+        tickers: [GOOGL, AMZN]
+        hold: 觸發後 12月+
+        exit: 僅輪動訊號成立時啟用
+        rotation_only: true
+      - name: 現金
+        weight: 0.05
+        tickers: []
+        hold: ""
+        exit: ""
+  - id: 3
+    name: 階段③
+    start: 2027-04-01
+    end: 2027-12-31
+    themes:
+      - name: Google TPU 鏈
+        theme_key: google_chain
+        weight: 0.28
+        tickers: [2454.TW, MRVL, ALAB]
+        hold: 12–18月
+        exit: 本階段主軸
+      - name: CSP
+        theme_key: csp
+        weight: 0.18
+        tickers: [GOOGL, AMZN, NVDA]
+        hold: 12月+
+        exit: 現金流轉正論述
+      - name: CPO 測試/封裝
+        theme_key: cpo
+        weight: 0.16
+        tickers: [TER, AMKR, 6187.TWO, 6223.TWO]
+        hold: 9–15月
+        exit: ""
+      - name: 記憶體/HDD
+        theme_key: memory_hdd
+        weight: 0.15
+        tickers: [MU, STX, SNDK]
+        hold: 收割期
+        exit: 依缺口訊號退出
+      - name: MLCC 擴產事件
+        theme_key: mlcc
+        weight: 0.15
+        tickers: [6981.T, 2327.TW]
+        hold: 事件型 3–9月
+        exit: 2027 年終擴產宣布 = P×Q 事件
+      - name: 現金
+        weight: 0.08
+        tickers: []
+        hold: ""
+        exit: 年終事件前保留子彈
+  - id: 4
+    name: 階段④
+    start: 2028-01-01
+    end: 2028-07-03
+    themes:
+      - name: CPO scale-up
+        theme_key: cpo
+        weight: 0.25
+        tickers: [TER, LITE, COHR, AMKR]
+        hold: 6–12月
+        exit: ""
+      - name: Google 鏈續抱
+        theme_key: google_chain
+        weight: 0.22
+        tickers: [2454.TW, MRVL, ALAB, GOOGL]
+        hold: 續抱
+        exit: ""
+      - name: 800V HVDC/功率
+        theme_key: default
+        weight: 0.15
+        tickers: [2308.TW, WOLF]
+        hold: 6–12月
+        exit: ""
+      - name: Physical AI 選擇權倉
+        theme_key: bb
+        weight: 0.05
+        tickers: [BB]
+        hold: 12月+
+        exit: 高風險小倉，上限 5%
+      - name: 記憶體/MLCC 收割
+        theme_key: memory_hdd
+        weight: 0.20
+        tickers: [MU, 6981.T]
+        hold: 依缺口訊號退出
+        exit: ""
+      - name: 現金
+        weight: 0.13
+        tickers: []
+        hold: ""
+        exit: 週期後段防守

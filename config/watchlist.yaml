@@ -1,0 +1,43 @@
+# 觀察清單 — 可自行增刪。symbol 一律用 Yahoo Finance 代碼。
+# category 影響備援資料源與下單單位（tw=千股、two=千股、jp=百股、us=1股）
+indices:
+  - ^SOX
+  - QQQ
+us:
+  - MU
+  - SNDK
+  - STX
+  - WDC
+  - TER
+  - LITE
+  - COHR
+  - MRVL
+  - ALAB
+  - AMKR
+  - GOOGL
+  - AMZN
+  - NVDA
+  - AVGO
+  - GLW
+  - INTC
+  - AMAT
+  - ONTO
+  - ASML
+  - UCTT
+  - KLIC
+  - BB
+  - WOLF
+tw:            # 上市（備援 TWSE OpenAPI）
+  - 2330.TW
+  - 2454.TW
+  - 2327.TW
+  - 2308.TW
+two:           # 上櫃（備援 TPEx / FinMind）
+  - 6187.TWO
+  - 6223.TWO
+jp:
+  - 6981.T
+  - 285A.T
+fx:
+  - TWD=X      # USD/TWD
+  - JPY=X      # USD/JPY（供日股換算 TWD）

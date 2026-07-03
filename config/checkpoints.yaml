@@ -1,0 +1,24 @@
+# 論述檢查點 — 前端三態切換：unverified（未驗證）/ confirmed（符合）/ falsified（證偽）
+# 任一 falsified → 持股水位 −20pp、槓桿鎖 1.0×（優先於一切價格訊號），首頁紅色橫幅。
+checkpoints:
+  - id: csp_capex
+    title: 2027 五大 CSP CAPEX 指引 ≥ +25% YoY
+    detail: 調研 +30% vs 共識 +12%；最早證偽點 2027 年初
+  - id: ter_cpo_units
+    title: Teradyne CPO 測試機 2027 出貨接近 200 台
+    detail: 今年約 70 台
+  - id: tpu_units
+    title: Google TPU 2027 出貨朝 1,000 萬顆推進
+    detail: vs NVDA 750 萬
+  - id: hdd_price
+    title: HDD 報價 ≥ $22/TB、供需缺口未收窄
+    detail: 調研 $25 vs 賣方 $20、缺口 ~30%
+  - id: mlcc_price
+    title: MLCC 每季漲價延續且廠商尚未擴產
+    detail: 擴產宣布 → 切換事件交易模式
+  - id: memory_lta
+    title: 記憶體 LTA 天花板（~30%/年）內持續調漲、定價權未失
+    detail: ""
+  - id: csp_rpo
+    title: CSP RPO 增速 > CAPEX 增速
+    detail: 現金流轉正核心條件

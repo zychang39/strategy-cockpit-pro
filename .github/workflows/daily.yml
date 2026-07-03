@@ -1,0 +1,38 @@
+# 每日抓價：台北 06:30（美股收盤後）與 14:30（台股收盤後）
+# cron 為 UTC：06:30 TPE = 22:30 UTC 前一日；14:30 TPE = 06:30 UTC
+name: daily-fetch
+on:
+  schedule:
+    - cron: "30 22 * * *"
+    - cron: "30 6 * * *"
+  workflow_dispatch: {}
+  push:            # 首次部署（或修改本檔）時自動跑第一次抓價
+    branches: [main]
+    paths: [".github/workflows/daily.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: fetch quotes
+        run: |
+          python fetch.py --init-targets
+          python scripts/export_config.py
+      - name: run engine tests
+        run: python -m pytest tests/ -q
+      - name: commit data
+        run: |
+          git config user.name "cockpit-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/ config/targets.yaml
+          git diff --cached --quiet || git commit -m "data: $(date -u +%F_%H%M)"
+          git push
+     

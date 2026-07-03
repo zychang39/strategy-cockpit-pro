@@ -1,0 +1,198 @@
+/* Apple HIG 精神落地：8pt grid、卡片分組、tabular-nums、深淺色、安全區 */
+:root {
+  color-scheme: light dark;
+  --bg: #f2f2f7;
+  --card: #ffffff;
+  --card-border: rgba(60, 60, 67, 0.12);
+  --text: #1c1c1e;
+  --text-2: rgba(60, 60, 67, 0.6);
+  --text-3: rgba(60, 60, 67, 0.35);
+  --sep: rgba(60, 60, 67, 0.14);
+  --tint: #0a84ff;
+  --up: #ff453a;      /* 台式：紅漲/多方 */
+  --down: #30d158;    /* 綠跌/防守 */
+  --warn: #ffd60a;
+  --fill-2: rgba(120, 120, 128, 0.16);
+  --radius: 14px;
+  --tab-h: 52px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --card: #1c1c1e;
+    --card-border: rgba(84, 84, 88, 0.5);
+    --text: #ffffff;
+    --text-2: rgba(235, 235, 245, 0.6);
+    --text-3: rgba(235, 235, 245, 0.3);
+    --sep: rgba(84, 84, 88, 0.6);
+    --fill-2: rgba(120, 120, 128, 0.24);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, "SF Pro Text", BlinkMacSystemFont, "PingFang TC",
+    "Noto Sans TC", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+.num, .mono, td.num { font-variant-numeric: tabular-nums; }
+
+/* ---- 版面：手機底部 Tab、寬螢幕側欄 ---- */
+#app { min-height: 100%; }
+.layout { display: flex; min-height: 100dvh; }
+.content {
+  flex: 1; max-width: 760px; margin: 0 auto; width: 100%;
+  padding: 16px 16px calc(var(--tab-h) + env(safe-area-inset-bottom) + 24px);
+  padding-top: calc(16px + env(safe-area-inset-top));
+}
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-around;
+  height: calc(var(--tab-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 0.5px solid var(--sep);
+}
+.tabbar button {
+  flex: 1; min-width: 44px; min-height: 44px;
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; font-size: 10px; color: var(--text-2);
+  font-family: inherit;
+}
+.tabbar button.active { color: var(--tint); }
+.tabbar .ico { font-size: 20px; line-height: 22px; }
+.sidebar { display: none; }
+@media (min-width: 900px) {
+  .tabbar { display: none; }
+  .sidebar {
+    display: flex; flex-direction: column; gap: 4px;
+    width: 210px; padding: 24px 12px; flex-shrink: 0;
+    border-right: 0.5px solid var(--sep);
+    position: sticky; top: 0; height: 100dvh;
+  }
+  .sidebar h1 { font-size: 17px; padding: 0 12px 12px; }
+  .sidebar button {
+    display: flex; align-items: center; gap: 10px; min-height: 44px;
+    padding: 0 12px; border: none; border-radius: 10px; background: none;
+    color: var(--text); font-size: 15px; cursor: pointer; text-align: left;
+    font-family: inherit;
+  }
+  .sidebar button.active { background: var(--fill-2); color: var(--tint); font-weight: 600; }
+  .content { padding-bottom: 40px; }
+}
+
+/* ---- 文字階層 ---- */
+h2.lt { font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: 0.2px; margin: 8px 0 16px; }
+h3.st { font-size: 20px; line-height: 25px; font-weight: 600; margin: 24px 0 8px; }
+.cap { font-size: 12px; line-height: 16px; color: var(--text-2); }
+.cap3 { font-size: 12px; line-height: 16px; color: var(--text-3); }
+
+/* ---- 卡片 ---- */
+.card {
+  background: var(--card);
+  border: 0.5px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card.accent { border-color: var(--tint); box-shadow: 0 0 0 1px var(--tint) inset; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.col { display: flex; flex-direction: column; gap: 4px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+
+/* ---- 徽章 / 橫幅 ---- */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; line-height: 16px; font-weight: 600;
+  padding: 2px 8px; border-radius: 100px; background: var(--fill-2);
+}
+.badge.up { color: var(--up); background: color-mix(in srgb, var(--up) 14%, transparent); }
+.badge.down { color: var(--down); background: color-mix(in srgb, var(--down) 14%, transparent); }
+.badge.warn { color: #b8860b; background: color-mix(in srgb, var(--warn) 22%, transparent); }
+@media (prefers-color-scheme: dark) { .badge.warn { color: var(--warn); } }
+.banner {
+  border-radius: var(--radius); padding: 12px 16px; margin-bottom: 12px;
+  font-weight: 600; display: flex; gap: 8px; align-items: flex-start;
+}
+.banner.red { background: color-mix(in srgb, var(--up) 16%, var(--card)); color: var(--up); border: 0.5px solid var(--up); }
+.banner.amber { background: color-mix(in srgb, var(--warn) 18%, var(--card)); border: 0.5px solid color-mix(in srgb, var(--warn) 60%, transparent); }
+.banner.blue { background: color-mix(in srgb, var(--tint) 12%, var(--card)); border: 0.5px solid var(--tint); }
+
+/* ---- 控件 ---- */
+input[type="number"], input[type="date"], input[type="text"], select {
+  font: inherit; color: var(--text);
+  background: var(--fill-2); border: none; border-radius: 10px;
+  padding: 10px 12px; min-height: 44px; width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+input:focus, select:focus { outline: 2px solid var(--tint); }
+button.btn {
+  font: inherit; font-weight: 600; min-height: 44px; min-width: 44px;
+  padding: 0 16px; border: none; border-radius: 12px; cursor: pointer;
+  background: var(--tint); color: #fff;
+}
+button.btn.gray { background: var(--fill-2); color: var(--text); }
+button.btn.small { min-height: 34px; padding: 0 12px; font-size: 13px; border-radius: 9px; }
+input[type="range"] { width: 100%; accent-color: var(--tint); min-height: 44px; }
+
+.seg {
+  display: flex; background: var(--fill-2); border-radius: 10px; padding: 2px;
+}
+.seg button {
+  flex: 1; min-height: 40px; border: none; border-radius: 8px; cursor: pointer;
+  background: none; color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
+}
+.seg button.active { background: var(--card); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+
+/* 檢查點三態 */
+.tri { display: flex; gap: 4px; }
+.tri button {
+  min-width: 44px; min-height: 34px; border: none; border-radius: 8px;
+  background: var(--fill-2); color: var(--text-2); font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.tri button.on-confirmed { background: color-mix(in srgb, var(--up) 18%, transparent); color: var(--up); }
+.tri button.on-falsified { background: var(--up); color: #fff; }
+.tri button.on-unverified { background: var(--fill-2); color: var(--text); }
+
+/* ---- 水位計 ---- */
+.gauge-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0 0; }
+.gauge-needle { transition: transform 0.9s cubic-bezier(0.34, 1.4, 0.44, 1); transform-origin: 130px 120px; }
+@media (prefers-reduced-motion: reduce) {
+  .gauge-needle { transition: none; }
+  * { animation: none !important; }
+}
+
+/* ---- 表格類 ---- */
+.list > .lrow {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 0.5px solid var(--sep); gap: 8px; min-height: 44px;
+}
+.list > .lrow:last-child { border-bottom: none; }
+
+.chg-up { color: var(--up); font-weight: 600; }
+.chg-down { color: var(--down); font-weight: 600; }
+.muted { color: var(--text-2); }
+.gray-out { opacity: 0.45; }
+
+footer.disclaimer {
+  margin-top: 24px; padding: 12px 4px; text-align: center;
+  font-size: 12px; line-height: 16px; color: var(--text-3);
+}
+canvas { max-width: 100%; }
+.spark { display: block; }
+.src-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.order-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.order-sym { font-size: 17px; font-weight: 700; }
+.kv { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+.kv .k { color: var(--text-2); }
+.kv .v { font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; }
+hr.sep { border: none; border-top: 0.5px solid var(--sep); margin: 10px 0; }
