@@ -1,7 +1,17 @@
-// 情境：蒙地卡羅模擬（10,000 條兩年路徑）+ 槓桿三檔疊圖
-import { useState, useEffect, useRef, useMemo } from "preact/hooks";
+// 情境：新手友好版——三個預設劇本 + 白話結果 + 進階參數（可摺疊）
+import { useState, useMemo } from "preact/hooks";
 import { simulate, histogram, DEFAULT_PARAMS } from "../mc.js";
 import { twd, pct, num } from "../fmt.js";
+import { useRef, useEffect } from "preact/hooks";
+
+const PRESETS = [
+  { id: "base", label: "講者基準", desc: "牛 35%／基準 40%／熊 25%——直播論述的原始假設",
+    p: { probBull: 0.35, probBear: 0.25 } },
+  { id: "cautious", label: "保守", desc: "牛 20%／基準 40%／熊 40%——假設論述多半不兌現",
+    p: { probBull: 0.20, probBear: 0.40 } },
+  { id: "bullish", label: "樂觀", desc: "牛 50%／基準 35%／熊 15%——假設檢查點多數驗證成功",
+    p: { probBull: 0.50, probBear: 0.15 } },
+];
 
 function HistChart({ runs, width = 340, height = 180 }) {
   const ref = useRef(null);
@@ -15,19 +25,16 @@ function HistChart({ runs, width = 340, height = 180 }) {
     ctx.clearRect(0, 0, width, height);
     const colors = { "1": "#30d158", "1.3": "#0a84ff", "1.8": "#ff453a" };
     const pad = 18;
-    // 0% 基準線
     const x0 = pad + ((0 - (-1)) / 3) * (width - 2 * pad);
     ctx.strokeStyle = "rgba(120,120,128,0.4)"; ctx.setLineDash([4, 4]);
     ctx.beginPath(); ctx.moveTo(x0, 8); ctx.lineTo(x0, height - 16); ctx.stroke();
     ctx.setLineDash([]);
     for (const [lev, res] of Object.entries(runs)) {
       const h = histogram(res.samples, 72, -1, 2);
-      ctx.beginPath();
-      ctx.strokeStyle = colors[lev] || "#999";
-      ctx.lineWidth = lev === "main" ? 2.5 : 1.5;
-      h.counts.forEach((c, i) => {
+      ctx.beginPath(); ctx.strokeStyle = colors[lev] || "#999"; ctx.lineWidth = 1.8;
+      h.counts.forEach((cnt, i) => {
         const x = pad + (i / 72) * (width - 2 * pad);
-        const y = height - 16 - (c / h.max) * (height - 32);
+        const y = height - 16 - (cnt / h.max) * (height - 32);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
       ctx.stroke();
@@ -49,14 +56,14 @@ const Slider = ({ label, value, min, max, step, onChange, fmt }) => (
 );
 
 export function Scenario({ st }) {
-  const { user, config } = st;
-  const [p, setP] = useState({ ...DEFAULT_PARAMS });
+  const { user } = st;
+  const [preset, setPreset] = useState("base");
+  const [p, setP] = useState({ ...DEFAULT_PARAMS, leverage: Math.min(user.levCap || 1.3, 1.8) });
   const set = (k) => (v) => setP((old) => ({ ...old, [k]: v }));
+  const pickPreset = (pr) => { setPreset(pr.id); setP((old) => ({ ...old, ...pr.p })); };
 
-  // 機率正規化（bull/bear 可調，base 吃剩餘）
   const probBase = Math.max(0, 1 - p.probBull - p.probBear);
   const params = { ...p, probBase };
-
   const { main, overlay } = useMemo(() => {
     const main = simulate(params, 42);
     const overlay = {};
@@ -69,49 +76,80 @@ export function Scenario({ st }) {
   return (
     <div>
       <h2 class="lt">情境</h2>
+      <p class="cap" style="margin:-8px 0 12px">
+        用 10,000 次隨機模擬回答一個問題：<b>照這套策略做兩年，我的錢會怎樣？</b>
+        每次模擬先擲骰子決定市場劇本（牛/基準/熊），再抽一個該劇本下的報酬。
+      </p>
 
-      <div class="card">
-        <div class="cap" style="margin-bottom:8px">兩年報酬分佈 — 槓桿 1.0（綠）/ 1.3（藍）/ 1.8（紅）疊圖，虛線為損益兩平</div>
-        <HistChart runs={overlay} />
-        <div class="cap3">槓桿放大右尾的同時，左尾（最差情況）被放大得更快——這是代價。</div>
+      <div class="preset-row">
+        {PRESETS.map((pr) => (
+          <button key={pr.id} class={"preset " + (preset === pr.id ? "active" : "")}
+            onClick={() => pickPreset(pr)}>
+            <strong>{pr.label}</strong>
+            <span class="cap3">{pr.desc}</span>
+          </button>
+        ))}
       </div>
 
       <div class="card">
-        <div class="cap" style="margin-bottom:8px">你的參數（槓桿 {p.leverage.toFixed(1)}×）模擬結果 · 10,000 條路徑</div>
-        <div class="grid2">
-          <div class="kv"><span class="k">期望值</span><span class="v num">{pct(main.mean * 100)}</span></div>
-          <div class="kv"><span class="k">中位數</span><span class="v num">{pct(main.median * 100)}</span></div>
-          <div class="kv"><span class="k">5% VaR</span><span class="v chg-down num">{pct(main.var5 * 100)}</span></div>
-          <div class="kv"><span class="k">虧損機率</span><span class="v num">{pct(main.pLoss * 100, 1, false)}</span></div>
+        <div class="row"><strong>兩年後，本金 {twd(cap)} 會變成…</strong></div>
+        <div class="result-grid">
+          <div class="rcell">
+            <div class="cap">一般情況（中位數）</div>
+            <div class={"num rbig " + (main.median >= 0 ? "chg-up" : "chg-down")}>{twd(cap * (1 + main.median))}</div>
+            <div class="cap3">{pct(main.median * 100)}——一半的模擬比這好、一半比這差</div>
+          </div>
+          <div class="rcell">
+            <div class="cap">平均（期望值）</div>
+            <div class={"num rbig " + (main.mean >= 0 ? "chg-up" : "chg-down")}>{twd(cap * (1 + main.mean))}</div>
+            <div class="cap3">{pct(main.mean * 100)}——被少數大賺的路徑拉高，別當成「應得」</div>
+          </div>
+          <div class="rcell">
+            <div class="cap">倒楣情況（最差 5%）</div>
+            <div class="num rbig chg-down">{twd(cap * (1 + main.var5))}</div>
+            <div class="cap3">{pct(main.var5 * 100)}——每 20 次有 1 次比這更糟（5% VaR）</div>
+          </div>
+          <div class="rcell">
+            <div class="cap">災難情況（最差 1%）</div>
+            <div class="num rbig chg-down">{twd(cap * (1 + main.worst1))}</div>
+            <div class="cap3">{pct(main.worst1 * 100)}——先問自己：發生時睡得著嗎？</div>
+          </div>
         </div>
         <hr class="sep" />
-        <div class="kv"><span class="k">期望終值（本金 {twd(cap)}）</span>
-          <span class="v">{twd(cap * (1 + main.mean))}</span></div>
-        <div class="kv"><span class="k">1% 最差剩餘資金</span>
-          <span class="v chg-down">{twd(cap * (1 + main.worst1))}</span></div>
+        <div class="kv"><span class="k">兩年後虧錢的機率</span>
+          <span class="v num" style="font-weight:700">{(main.pLoss * 100).toFixed(0)}%</span></div>
       </div>
 
       <div class="card">
-        <div class="cap" style="margin-bottom:8px">參數（皆可調）</div>
-        <Slider label="平均槓桿" value={p.leverage} min={1} max={1.8} step={0.1}
-          onChange={set("leverage")} fmt={(v) => v.toFixed(1) + "×"} />
-        <Slider label="牛市機率" value={p.probBull} min={0} max={0.7} step={0.05}
-          onChange={set("probBull")} fmt={(v) => (v * 100).toFixed(0) + "%"} />
-        <Slider label="熊市機率" value={p.probBear} min={0} max={0.7} step={0.05}
-          onChange={set("probBear")} fmt={(v) => (v * 100).toFixed(0) + "%"} />
-        <div class="cap3">基準情境機率 = {(probBase * 100).toFixed(0)}%（自動）</div>
-        <hr class="sep" />
-        <Slider label="牛市平均報酬 μ" value={p.bull.mu} min={0.2} max={1.2} step={0.05}
-          onChange={(v) => setP((o) => ({ ...o, bull: { ...o.bull, mu: v } }))} fmt={(v) => pct(v * 100)} />
-        <Slider label="基準平均報酬 μ" value={p.base.mu} min={-0.1} max={0.6} step={0.05}
-          onChange={(v) => setP((o) => ({ ...o, base: { ...o.base, mu: v } }))} fmt={(v) => pct(v * 100)} />
-        <Slider label="熊市平均報酬 μ" value={p.bear.mu} min={-0.6} max={0.1} step={0.02}
-          onChange={(v) => setP((o) => ({ ...o, bear: { ...o.bear, mu: v } }))} fmt={(v) => pct(v * 100)} />
-        <Slider label="熊市跳空事件機率（額外 −10%）" value={p.gapProb} min={0} max={0.6} step={0.05}
-          onChange={set("gapProb")} fmt={(v) => (v * 100).toFixed(0) + "%"} />
-        <Slider label="融資成本（年 × 借款比）" value={p.costPerYear} min={0} max={0.08} step={0.005}
-          onChange={set("costPerYear")} fmt={(v) => (v * 100).toFixed(1) + "%"} />
+        <Slider label={"我的槓桿（目前配置 " + (user.levCap || 1.3).toFixed(1) + "×）"} value={p.leverage}
+          min={1} max={1.8} step={0.1} onChange={set("leverage")} fmt={(v) => v.toFixed(1) + "×"} />
+        <div class="cap" style="margin:10px 0 6px">槓桿 1.0（綠）/ 1.3（藍）/ 1.8（紅）的結果分佈疊圖——右尾變胖的同時，左尾胖得更快：</div>
+        <HistChart runs={overlay} />
+        <div class="cap3">虛線＝損益兩平。曲線越往左延伸，代表大虧的可能性越高。這就是槓桿的代價。</div>
       </div>
+
+      <details class="thesis">
+        <summary>進階參數（機率與報酬假設）</summary>
+        <div class="thesis-body">
+          <Slider label="牛市機率" value={p.probBull} min={0} max={0.7} step={0.05}
+            onChange={(v) => { setPreset(null); set("probBull")(v); }} fmt={(v) => (v * 100).toFixed(0) + "%"} />
+          <Slider label="熊市機率" value={p.probBear} min={0} max={0.7} step={0.05}
+            onChange={(v) => { setPreset(null); set("probBear")(v); }} fmt={(v) => (v * 100).toFixed(0) + "%"} />
+          <div class="cap3">基準情境機率自動 = {(probBase * 100).toFixed(0)}%（三者加總 100%）</div>
+          <hr class="sep" />
+          <Slider label="牛市兩年平均報酬" value={p.bull.mu} min={0.2} max={1.2} step={0.05}
+            onChange={(v) => setP((o) => ({ ...o, bull: { ...o.bull, mu: v } }))} fmt={(v) => pct(v * 100)} />
+          <Slider label="基準兩年平均報酬" value={p.base.mu} min={-0.1} max={0.6} step={0.05}
+            onChange={(v) => setP((o) => ({ ...o, base: { ...o.base, mu: v } }))} fmt={(v) => pct(v * 100)} />
+          <Slider label="熊市兩年平均報酬" value={p.bear.mu} min={-0.6} max={0.1} step={0.02}
+            onChange={(v) => setP((o) => ({ ...o, bear: { ...o.bear, mu: v } }))} fmt={(v) => pct(v * 100)} />
+          <Slider label="熊市跳空事件機率（額外 −10%）" value={p.gapProb} min={0} max={0.6} step={0.05}
+            onChange={set("gapProb")} fmt={(v) => (v * 100).toFixed(0) + "%"} />
+          <Slider label="融資成本（年利率 × 借款比）" value={p.costPerYear} min={0} max={0.08} step={0.005}
+            onChange={set("costPerYear")} fmt={(v) => (v * 100).toFixed(1) + "%"} />
+          <div class="cap3">「平均報酬」是該劇本下兩年總報酬的中心值；實際每次模擬還會加上隨機波動（常態分佈）。</div>
+        </div>
+      </details>
     </div>
   );
 }

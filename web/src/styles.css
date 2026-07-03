@@ -221,3 +221,73 @@ details.thesis[open] summary::before { content: "▾ "; }
 .thesis-body { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 8px; }
 .trow { display: grid; grid-template-columns: 72px 1fr; gap: 8px; font-size: 13px; line-height: 18px; }
 .trow .tk { color: var(--text-2); font-weight: 600; flex-shrink: 0; }
+
+/* ---- 大改版：個股面板 / 圖表 / 晶片 / 策略頁 / 情境預設 ---- */
+.symlink {
+  background: none; border: none; padding: 0; cursor: pointer;
+  color: var(--text); font: inherit; text-align: left;
+  display: inline-flex; align-items: baseline; min-height: 24px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--tint) 55%, transparent);
+}
+.symlink:active { opacity: 0.6; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 8px;
+  font-variant-numeric: tabular-nums;
+}
+.chip-buy { color: #fff; background: var(--up); }
+.chip-sell { color: #fff; background: var(--down); }
+
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.sheet {
+  background: var(--bg); width: 100%; max-width: 680px;
+  max-height: 92dvh; overflow-y: auto;
+  border-radius: 16px 16px 0 0; padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+  animation: sheet-up 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+@media (min-width: 900px) {
+  .sheet-backdrop { align-items: center; }
+  .sheet { border-radius: 16px; max-height: 88dvh; }
+}
+@keyframes sheet-up { from { transform: translateY(40%); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+.sheet-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 8px; }
+.sheet .card { background: var(--card); }
+
+.chart-info { min-height: 22px; font-size: 14px; padding: 2px 0 4px; }
+.range-seg { display: flex; gap: 2px; background: var(--fill-2); border-radius: 10px; padding: 2px; }
+.range-seg button {
+  flex: 1; min-height: 34px; border: none; border-radius: 8px; cursor: pointer;
+  background: none; color: var(--text-2); font: inherit; font-size: 12px; font-weight: 600;
+}
+.range-seg button.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+.range-seg button:disabled { opacity: 0.3; cursor: default; }
+
+.ticker-row { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.ticker-row .symlink { font-size: 13px; font-weight: 600; color: var(--tint); border-bottom: none; }
+
+p.quote {
+  margin: 8px 0; padding: 8px 12px; font-size: 13px; line-height: 18px;
+  color: var(--text-2); border-left: 3px solid var(--tint);
+  background: var(--fill-2); border-radius: 0 8px 8px 0;
+}
+
+.preset-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.preset {
+  display: flex; flex-direction: column; gap: 4px; text-align: left;
+  padding: 10px 12px; min-height: 44px; cursor: pointer;
+  background: var(--card); color: var(--text);
+  border: 1.5px solid var(--card-border); border-radius: 12px; font: inherit;
+}
+.preset.active { border-color: var(--tint); box-shadow: 0 0 0 1px var(--tint) inset; }
+@media (max-width: 500px) { .preset-row { grid-template-columns: 1fr; } }
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+@media (max-width: 500px) { .result-grid { grid-template-columns: 1fr; } }
+.rcell { display: flex; flex-direction: column; gap: 2px; }
+.rbig { font-size: 20px; font-weight: 700; }

@@ -11,7 +11,7 @@ export function useAppState() {
   const [loadError, setLoadError] = useState(null);
   const [user, setUser] = useState({
     capital: 1_000_000, levCap: 1.3, phaseOverride: null,
-    checkpoints: {}, nav: [], holdings: [],
+    checkpoints: {}, nav: [], holdings: [], gClientId: "", gLastSync: null,
   });
   const [tick, setTick] = useState(0);
   const refreshUser = useCallback(() => setTick((t) => t + 1), []);
@@ -37,6 +37,8 @@ export function useAppState() {
         checkpoints: await kvGet("checkpoints", {}),
         nav: await navAll(),
         holdings: await holdingsAll(),
+        gClientId: await kvGet("gClientId", ""),
+        gLastSync: await kvGet("gLastSync", null),
       });
     })();
   }, [tick]);

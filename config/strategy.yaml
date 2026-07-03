@@ -1,0 +1,90 @@
+# 策略頁內容 — 三條紀律 × 四階段佈局 × 槓桿 × 退出（Allen 直播論述整理）
+# 「」內為作者原話。所有調研數字非公開共識，當假設用、每季財報驗證。
+disciplines:
+  - title: 倉位由均線決定，破線就砍
+    quote: 「我個人不會頭鐵，破線就砍掉，破線就降倉位。」「60MA 加到 80%，30MA 以上做 90% 到 100% 滿倉水位。」
+    body: 站上 30MA → 90–100%；跌破 30MA → 降到約 80%；跌破 60MA → 再降。唯一例外：兩條均線太近（<5%）時不一次砍 40%，改砍 20–30%。右側交易（《超級績效》），不抄底、不逆勢。
+  - title: 最重要的資金輪動檢查點：費半 vs QQQ
+    quote: 「假設費半跌破 30 日均線，但 QQQ 未跌破，市場是否在用股價投票？」「我是很認真的跟你講，CSP 的現金流有可能會復甦。」
+    body: 觸發成立 → 從半導體供應鏈搬部分資金回 CSP（點名 Google、Amazon、NVIDIA）。邏輯：2023 年買的 H 系列伺服器 2027–28 折舊到期；CAPEX YoY（抓 30%）低於 RPO YoY 時營業現金流轉正。
+  - title: 大宗商品的玩法：賭擴產時點，不是賭漲價
+    quote: 「先漲價，漲到客戶受不了，才會擴產。」「漲價多輪後擴產，P 和 Q 都拉高，營收噴出。」
+    body: MLCC、DRAM、NAND、HDD 全適用。漲價已是共識、預期差小；真正的爆發是擴產宣布那一刻（P×Q 齊升）。MLCC 擴產判斷約在 2027 年底。
+stages:
+  - id: 1
+    name: 階段①
+    period: 本季（2026 Q3）
+    summary: 以作者自揭持倉為藍本：記憶體 ~30%、MLCC ~20%、設備 15–20%、其他。
+    plays:
+      - title: 記憶體 ~30%
+        tickers: [MU, SNDK, STX, WDC, 285A.T]
+        body: HDD 是最強調的「最大預期差」——供需缺口約 30%、報價 $25/TB vs 賣方預期 $20、PE 約 10 倍。DRAM/NAND 在 LTA 天花板內連續調漲。
+      - title: MLCC ~20%
+        tickers: [6981.T, 2327.TW]
+        body: Rubin 單櫃用量約 100 萬顆（GB300 的兩倍多）；Murata 2027 年 25 倍「算中性」。
+      - title: 設備 15–20%
+        tickers: [AMAT, ONTO, ASML, UCTT, KLIC, 2330.TW]
+        body: 台積電下半年可能上修 CAPEX（三年合計 2,200 億美元）；三星、Intel 需求還沒進模型＝上修空間。
+      - title: 其他
+        tickers: [GLW, INTC, WOLF]
+        body: GLW 看光纖不看玻璃橋；WOLF 功率半導體觀察倉。
+    avoid: 「Teradyne 下半年財報可能不理想…投資人可能對財報感到不適，需先做好心理準備」——財報回檔反而是佈局點。光通訊已破線砍掉（Lumentum、Nokia），先不追。
+  - id: 2
+    name: 階段②
+    period: 半年內（2026 Q4 – 2027 Q1）
+    summary: 回補光通訊、TER 逢財報弱勢建倉、CSP 檢查點武裝待發。
+    plays:
+      - title: 回補光通訊
+        tickers: [LITE, COHR]
+        body: 「下半年我傾向找時機買回。」LITE 估值錨：EPS $30 × 35 倍 ≈ $1,000+，回檔到估值合理再接。
+      - title: Teradyne 逢財報弱勢建倉
+        tickers: [TER]
+        body: 2027 三條主線——WLT T2 CPO 測試機今年 70 台→明年 200 台；Rubin GPU 測試搶 Advantest 份額（10%→兩三年 30%）；Google/MTK 新客戶。2027 EPS $10–11 且「上修 10–15% 合理」。
+      - title: CSP 檢查點啟動
+        tickers: [GOOGL, AMZN]
+        body: 一旦費半破 30MA 而 QQQ 沒破 → 加 GOOGL、AMZN（「我可能會回去買」）。
+  - id: 3
+    name: 階段③
+    period: 一年（2027 全年）
+    summary: 核心論述：2027 CSP CAPEX +30% vs 彭博共識 +12%；「真正受惠者可能是 Google 及其供應鏈，而非 NVIDIA」。TPU 2027 出貨 1,000 萬顆 > NVIDIA GPGPU 750 萬顆（衰退）。
+    plays:
+      - title: Google TPU 鏈（本階段主軸）
+        tickers: [2454.TW, MRVL, ALAB]
+        body: 聯發科拿到 9 倍 CoWoS（「Google 扶植 MTK 的原因就是便宜」，被 MRVL 搶份額機率低）；MRVL 四個 Google 專案 + TPU v10「TIA」+ memory pooling；ALAB CXL 打入 Google 記憶體池 + Trainium gearbox。AVGO 留意毛利被殺價風險。
+      - title: 台股 CPO 測試 / 封裝
+        tickers: [6187.TWO, 6223.TWO, AMKR]
+        body: 萬潤、旺矽（「我個人蠻喜歡 MPI」）；AMKR 拿 Vera CPO 封裝 ~70% 訂單，模型還有 10–20% 上修。
+      - title: 2027 年底關鍵事件：MLCC 擴產宣布
+        tickers: [6981.T, 2327.TW]
+        body: 「積極投資人會賭擴產時點…可以預期 2027 年年終左右會受不了。」擴產前還有多輪漲價；擴產宣布＝P×Q 噴出。
+  - id: 4
+    name: 階段④
+    period: 兩年（2028 上半年前後）
+    summary: CPO scale-up 放量、Physical AI 早期倉、800V HVDC。
+    plays:
+      - title: CPO scale-up 放量
+        tickers: [TER, LITE, COHR, AMKR]
+        body: 「2028 年隨 Scale-up，滲透率持續上升」——光引擎 94 萬顆 → 500 多萬顆（5 倍）；全光 2028–29 實現。
+      - title: Physical AI 早期倉（≤5%）
+        tickers: [BB]
+        body: QNX 與 NVIDIA IGX Thor 做 OS 級整合，「每賣出一個晶片，NVIDIA 就要付 BlackBerry 權利金」。SAM 2029 約 59 億美元 vs 市值 60–70 億。「這些仍是早期」——小部位選擇權性質，等 2027 下半年量產驗證證據再加。
+      - title: 800V HVDC
+        tickers: [2308.TW, WOLF]
+        body: 2028 年底滲透率 10–20%，Google、Meta、xAI 積極採用。
+split:
+  title: 美股 / 台股比例
+  body: 覆蓋清單以美股為主，主要論述（HDD、Teradyne、Google 鏈、BlackBerry）都在美股——合理分法：美股 60–70%、台股/日股 30–40%（台股集中 2454、6187、6223、2327、2330 與設備；日股 Murata、Kioxia 用複委託）。
+leverage:
+  title: 槓桿原則
+  quote: 「槓桿就是一個工具…問題在於人們不知道自己的風險承受度。」「如果回檔讓你有壓力，我建議不要。」
+  body: 只在指數站上 30MA、滿倉 90–100% 的階段才動用槓桿，上限 1.3 倍；跌破 30MA 先把槓桿降到 1.0，再降現股倉位。1.8 倍在本框架下沒有出現支持理由。
+exits:
+  title: 持股週期與退出
+  rules:
+    - 主線（記憶體、MLCC、設備、HDD、Google 鏈）：12–24 個月，「論述是否改變＋均線」雙重退出——channel check 顯示缺口收窄（如 MLCC 從 2,400 億顆縮到 1,000 億顆）就走，不等破線。
+    - 事件型（TER 財報回檔、MLCC 擴產宣布）：3–9 個月。
+    - CSP：觸發檢查點才進，持有到折舊紅利兌現（2027–28）。
+    - 估值紀律：「估值變便宜了，我一定會先去看為什麼估值變便宜…現在假設 15 倍很便宜，我反而不敢買。」
+risk:
+  title: 風險提醒
+  body: 整套策略高度依賴單一分析師的 channel check（CAPEX +30%、TPU 1,000 萬顆、HDD 缺口 30% 都是調研數字，非公開共識），且作者自承賣點很差（「我們很爛，賣不在高點」）。把數字當假設而非事實，每季用財報驗證——特別是 2027 年初 CSP CAPEX 指引與 Teradyne CPO 出貨，是最早能被證偽的兩個點。

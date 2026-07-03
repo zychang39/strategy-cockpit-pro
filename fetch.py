@@ -185,6 +185,44 @@ def fetch_one(symbol, category):
     }
 
 
+# ---------------------------------------------------------------- OHLCV 歷史（圖表用）
+def sanitize(sym):
+    return sym.replace("^", "IDX_").replace("=", "_")
+
+
+def fetch_ohlcv(symbol):
+    """5 年日 K + 當日 5 分 K → dict；任一段失敗回 None 欄位，不整批失敗。"""
+    import yfinance as yf
+    tk = yf.Ticker(symbol)
+    out = {"symbol": symbol, "daily": None, "intraday": None, "fetched_at": now_iso()}
+    try:
+        d = tk.history(period="5y", auto_adjust=False)
+        d = d.dropna(subset=["Close"])
+        if len(d):
+            out["daily"] = {
+                "t": [i.date().isoformat() for i in d.index],
+                "o": [round(float(x), 4) for x in d["Open"]],
+                "h": [round(float(x), 4) for x in d["High"]],
+                "l": [round(float(x), 4) for x in d["Low"]],
+                "c": [round(float(x), 4) for x in d["Close"]],
+                "v": [int(x) if x == x else 0 for x in d["Volume"]],
+            }
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        it = tk.history(period="1d", interval="5m")
+        it = it.dropna(subset=["Close"])
+        if len(it):
+            out["intraday"] = {
+                "t": [int(i.timestamp()) for i in it.index],
+                "c": [round(float(x), 4) for x in it["Close"]],
+                "v": [int(x) if x == x else 0 for x in it["Volume"]],
+            }
+    except Exception:  # noqa: BLE001
+        pass
+    return out if (out["daily"] or out["intraday"]) else None
+
+
 # ---------------------------------------------------------------- 選擇權（僅參考）
 def norm_cdf(x):
     return 0.5 * (1 + math.erf(x / math.sqrt(2)))
@@ -280,6 +318,7 @@ def main():
     ap.add_argument("--init-targets", action="store_true")
     ap.add_argument("--force-targets", action="store_true")
     ap.add_argument("--skip-options", action="store_true")
+    ap.add_argument("--skip-history", action="store_true")
     args = ap.parse_args()
 
     watch = yaml.safe_load((CONFIG / "watchlist.yaml").read_text(encoding="utf-8"))
@@ -318,6 +357,23 @@ def main():
         for sym in settings["leaps"]["symbols"]:
             spot = (quotes.get(sym) or {}).get("price")
             options[sym] = fetch_leaps(sym, spot, settings["leaps"]) if spot else None
+
+    # 每檔 OHLCV 歷史 → data/quotes/*.json（圖表用；fx 不需要）
+    hist_index = {}
+    if not args.skip_history:
+        (DATA / "quotes").mkdir(parents=True, exist_ok=True)
+        for sym, q in quotes.items():
+            if q.get("category") == "fx" or q.get("error"):
+                continue
+            h = fetch_ohlcv(sym)
+            if h:
+                fn = sanitize(sym) + ".json"
+                (DATA / "quotes" / fn).write_text(
+                    json.dumps(h, ensure_ascii=False), encoding="utf-8")
+                hist_index[sym] = fn
+        (DATA / "quotes" / "index.json").write_text(
+            json.dumps(hist_index, ensure_ascii=False), encoding="utf-8")
+        print(f"history: {len(hist_index)} symbols → data/quotes/")
 
     out = {
         "generated_at": now_iso(),
