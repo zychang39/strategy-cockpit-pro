@@ -1,0 +1,149 @@
+# 每檔標的的買進時點 / 理由 / 上檔空間 / 風險與退出
+# 來源：Allen 直播論述整理。所有數字為單一分析師 channel check，非公開共識——
+# 當假設用，每季以財報驗證一次。最早證偽點：2027 年初 CSP CAPEX 指引、TER CPO 出貨。
+theses:
+  # ============ 記憶體 / HDD ============
+  MU:
+    buy: 階段①核心倉；SOX 站上 30MA 期間分批建立
+    why: DRAM/NAND 漲價循環，LTA 天花板（~30%/年）內連續調漲、定價權在手（檢查點⑥）
+    upside: 漲價多輪後的擴產宣布＝P×Q 齊升；擴產前每輪漲價都是預期差
+    risk: LTA 定價權鬆動、擴產提早宣布 → 切換事件交易模式
+  SNDK:
+    buy: 階段①與 MU 同步分批
+    why: NAND 純度最高的標的，漲價彈性大於綜合型記憶體廠
+    upside: NAND 合約價循環上行 + 企業級 SSD 排擠效應
+    risk: NAND 廠商擴產紀律不如 DRAM，跌價循環轉折快
+  STX:
+    buy: 階段①核心倉；HDD 是全論述「最大預期差」
+    why: 調研報價 $25/TB vs 賣方模型 $20、供需缺口約 30%、PE 僅 ~10 倍——市場尚未定價
+    upside: 報價每上修 $1/TB 都直接灌 EPS；缺口不收窄則漲價延續
+    risk: 退出線明確——報價 < $22/TB 或 channel check 顯示缺口收窄（不等破線）
+  WDC:
+    buy: 同 STX，兩檔分散單一公司執行風險
+    why: 同 HDD 缺口論述；NAND 業務分拆後純度提升
+    upside: 同 STX 預期差邏輯
+    risk: 同 STX 退出線
+  285A.T:
+    buy: 階段①複委託佈局（日股）
+    why: Kioxia——NAND 補漲循環，估值低於美系同業
+    upside: NAND 漲價循環 + 日股半導體重估
+    risk: 流動性與匯率（JPY）雙重風險
+  # ============ MLCC ============
+  6981.T:
+    buy: 階段①建倉、抱到 2027 年底擴產事件
+    why: Murata——Rubin 單櫃 MLCC 用量約 100 萬顆（GB300 的兩倍多）；2027 年 25 倍本益比「算中性」
+    upside: 擴產宣布（判斷 ~2027 年底）前有多輪漲價；宣布當下 P×Q 齊升是本論述最大事件
+    risk: 提早擴產宣布或需求斷；缺口從 2,400 億顆縮至 ~1,000 億顆即警覺
+  2327.TW:
+    buy: 階段①與 Murata 同步（台股流動性佳、可槓桿）
+    why: 國巨——同 MLCC 漲價循環，高階佔比持續提升
+    upside: 同 Murata 事件邏輯；台股評價彈性更大
+    risk: 同 Murata；另留意台股籌碼面波動
+  # ============ 半導體設備 ============
+  AMAT: &equip
+    buy: 階段①佈局；台積電下半年 CAPEX 上修為催化
+    why: 台積電三年 CAPEX 合計 2,200 億美元；三星、Intel 需求「還沒進模型」＝純上修空間
+    upside: CAPEX 指引每次上修都是重估；設備股領先接單反應
+    risk: 台積電 CAPEX 指引下修即退出（主題退出線）
+  ONTO: *equip
+  ASML: *equip
+  UCTT: *equip
+  KLIC: *equip
+  2330.TW:
+    buy: 階段①台股核心
+    why: CAPEX 論述的直接載體；製程獨佔下漲價權在手
+    upside: 下半年 CAPEX 上修 + AI 訂單能見度延長
+    risk: 個股破季線且論述惡化才退出
+  2454.TW:
+    buy: 階段①開始建立、階段③主軸加碼
+    why: 聯發科拿到 9 倍 CoWoS 產能；「Google 扶植 MTK 的原因就是便宜」，被 MRVL 搶份額機率低
+    upside: TPU 2027 出貨 1,000 萬顆論述的台股最大受益者
+    risk: Google 專案 re-tape-out 延遲、CoWoS 分配變動
+  # ============ 光纖 / 其他 ============
+  GLW:
+    buy: 階段①持有
+    why: 看 AI 資料中心光纖需求（不是玻璃基板故事）
+    upside: 全光化 2028–29 的長尾受益者
+    risk: 論述屬次要主題，權重勿超配
+  INTC:
+    buy: 階段①小倉
+    why: 設備/代工週期的選擇權性質部位
+    upside: 代工訂單或分拆題材
+    risk: 執行力紀錄差，僅配次要權重
+  WOLF:
+    buy: 觀察倉；階段④隨 800V 題材才加
+    why: SiC 功率——800V HVDC 供應鏈一環
+    upside: 2028 年底 HVDC 滲透率 10–20%
+    risk: 財務體質弱，破線即走
+  # ============ 事件型：Teradyne ============
+  TER:
+    buy: 本季迴避！下半年財報「可能不理想」——財報弱勢回檔才分批建倉（事件型 3–9 個月起，主線可抱至 2027 CPO 放量）
+    why: 三條 2027 主線——WLT T2 CPO 測試機今年 70 台→明年 ~200 台；Rubin GPU 測試搶 Advantest 份額（10%→兩三年 30%）；Google/MTK 新客戶
+    upside: 2027 EPS $10–11，且「上修 10–15% 合理」；CPO 測試是 2027–28 滲透率故事的賣鏟人
+    risk: CPO 出貨不及 200 台是本論述最早證偽點之一（檢查點②）
+  # ============ 光通訊回補 ============
+  LITE:
+    buy: 已破線砍掉、本季不追；回檔至估值錨才回補（階段②）
+    why: 光通訊/CPO 光引擎主要供應商
+    upside: 估值錨 EPS $30 × 35 倍 ≈ $1,000+
+    risk: 回補前破線紀律優先於論述
+  COHR:
+    buy: 階段②回補（帳上僅存的光通訊倉）
+    why: 光引擎 + 資料中心光學全棧
+    upside: 光引擎 94 萬顆 → 500+ 萬顆（5 倍）的 2028 scale-up
+    risk: 同 LITE，等回檔不追高
+  # ============ CSP 觸發倉 ============
+  GOOGL: &csp
+    buy: 輪動檢查點觸發才進——SOX 破 30MA 而 QQQ 未破＝「市場用股價投票」
+    why: 2023 年買的 H 系列伺服器 2027–28 折舊到期；當 CAPEX YoY（~30%）< RPO YoY，營業現金流轉正（檢查點⑦）
+    upside: 持有到折舊紅利兌現（2027–28）；Google 另有 TPU 陣營論述加持
+    risk: RPO 增速跌破 CAPEX 增速即論述失效
+  AMZN: *csp
+  NVDA:
+    buy: 輪動觸發後的 CSP 倉一部分（階段③）
+    why: CSP 現金流復甦受益者；但注意 2027 GPGPU 出貨 750 萬顆（衰退）vs TPU 1,000 萬顆
+    upside: 現金流論述 + 生態系防禦
+    risk: 「真正受惠者可能是 Google 及其供應鏈，而非 NVIDIA」——陣營選擇上作者偏 TPU
+  # ============ Google TPU 鏈（階段③主軸）============
+  MRVL:
+    buy: 階段③主軸建倉
+    why: 四個 Google 專案在手 + TPU v10「TIA」+ memory pooling 管理晶片
+    upside: TPU 出貨 1,000 萬顆論述的 ASIC 直接受益者
+    risk: 專案制營收波動大；Google 壓價風險
+  ALAB:
+    buy: 階段③主軸建倉
+    why: CXL 晶片打入 Google 記憶體池 + AWS Trainium gearbox
+    upside: memory pooling 是 TPU v10 世代新增量市場
+    risk: 高估值、對單一客戶集中
+  AVGO:
+    buy: 僅 LEAPS 名單備選，不在配置主題
+    why: TPU 現世代主力供應商
+    upside: TPU 出貨量成長
+    risk: 明確警示——毛利被 Google 殺價的風險，優先順位低於 MRVL/ALAB/MTK
+  # ============ CPO 測試 / 封裝 ============
+  AMKR:
+    buy: 階段③建倉
+    why: Vera CPO 封裝拿約 70% 訂單
+    upside: 模型還有 10–20% 上修空間
+    risk: 封裝毛利結構性偏低，看量不看價
+  6187.TWO:
+    buy: 階段③建倉（台股 CPO 測試）
+    why: 萬潤——CPO 測試設備供應商
+    upside: CPO 滲透率 2027–28 上升的台股映射
+    risk: 上櫃流動性、單一題材集中
+  6223.TWO:
+    buy: 階段③建倉
+    why: 旺矽（MPI）——CPO 測試探針卡，作者點名「我個人蠻喜歡」
+    upside: 同 CPO 測試邏輯
+    risk: 同 6187
+  # ============ 階段④ ============
+  2308.TW:
+    buy: 階段④佈局
+    why: 台達電——800V HVDC 電源架構，Google/Meta/xAI 積極採用
+    upside: 2028 年底滲透率 10–20%
+    risk: 滲透節奏遞延
+  BB:
+    buy: 階段④小倉（上限 5%）；等 2027 下半年量產驗證證據出現再加
+    why: QNX 與 NVIDIA IGX Thor 做 OS 級整合——「每賣出一個晶片，NVIDIA 就要付 BlackBerry 權利金」
+    upside: SAM 2029 約 59 億美元 vs 市值 60–70 億；權利金模式毛利極高
+    risk: 「這些仍是早期」——選擇權性質，可歸零心態管理

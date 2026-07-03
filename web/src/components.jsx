@@ -32,7 +32,7 @@ export function Gauge({ exposure, regime, label }) {
           <circle cx="130" cy="120" r="7" fill="var(--text)" />
         </g>
       </svg>
-      <div class="num" style="font-size:34px;font-weight:700;margin-top:-28px">{(pctv * 100).toFixed(0)}%</div>
+      <div class="num" style="font-size:30px;font-weight:700;margin-top:-4px">{(pctv * 100).toFixed(0)}%</div>
       <div class="cap">{label || "目標總曝險"}</div>
     </div>
   );

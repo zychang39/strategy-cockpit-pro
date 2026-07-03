@@ -18,6 +18,9 @@ def main():
     tp = ROOT / "config" / "targets.yaml"
     cfg["targets"] = (yaml.safe_load(tp.read_text(encoding="utf-8")) or {}).get("targets") \
         if tp.exists() else None
+    hp = ROOT / "config" / "theses.yaml"
+    cfg["theses"] = (yaml.safe_load(hp.read_text(encoding="utf-8")) or {}).get("theses") \
+        if hp.exists() else None
     out = ROOT / "data" / "config.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(cfg, ensure_ascii=False, default=str), encoding="utf-8")

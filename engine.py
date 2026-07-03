@@ -35,9 +35,9 @@ def detect_regime(sox_close, sox_ma30, sox_ma60, qqq_close, qqq_ma30, qqq_ma60) 
     above60 = sox_close > sox_ma60
 
     if above30 and above60:
-        s = Signals(OFFENSE, 0.95, 1.8)
+        s = Signals(OFFENSE, 0.95, 1.3)  # 槓桿僅在站上 30MA 時動用，上限 1.3×（1.8× 在本框架無支持理由）
     elif (not above30) and above60:
-        s = Signals(REDUCE, 0.80, 1.3)
+        s = Signals(REDUCE, 0.80, 1.0)   # 跌破 30MA：先把槓桿歸 1.0，再降現股倉位
     else:  # sox <= 60MA（含 >30MA 但 <60MA 的罕見情況，一律防守）
         s = Signals(DEFENSE, 0.65, 1.0)
         s.notes.append("防守制度：禁用融資與槓桿型選擇權")

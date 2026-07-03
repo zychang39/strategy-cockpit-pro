@@ -10,7 +10,7 @@ export function useAppState() {
   const [config, setConfig] = useState(null);   // config.json
   const [loadError, setLoadError] = useState(null);
   const [user, setUser] = useState({
-    capital: 1_000_000, levCap: 1.8, phaseOverride: null,
+    capital: 1_000_000, levCap: 1.3, phaseOverride: null,
     checkpoints: {}, nav: [], holdings: [],
   });
   const [tick, setTick] = useState(0);
@@ -32,7 +32,7 @@ export function useAppState() {
     (async () => {
       setUser({
         capital: await kvGet("capital", 1_000_000),
-        levCap: await kvGet("levCap", 1.8),
+        levCap: await kvGet("levCap", 1.3),
         phaseOverride: await kvGet("phaseOverride", null),
         checkpoints: await kvGet("checkpoints", {}),
         nav: await navAll(),

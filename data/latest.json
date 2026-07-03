@@ -4,7 +4,7 @@
  "signals": {
   "regime": "reduce",
   "base_position": 0.8,
-  "base_leverage": 1.3,
+  "base_leverage": 1.0,
   "rotation": false,
   "glue": false,
   "reduction_cap": null,

@@ -13,11 +13,11 @@ from engine import (OFFENSE, REDUCE, DEFENSE, detect_regime, apply_modifiers,
 # ---------------------------------------------------------------- 制度三分支
 def test_offense():
     s = detect_regime(110, 100, 90, 500, 480, 470)
-    assert s.regime == OFFENSE and s.base_position == 0.95 and s.base_leverage == 1.8
+    assert s.regime == OFFENSE and s.base_position == 0.95 and s.base_leverage == 1.3
 
 def test_reduce():
     s = detect_regime(95, 100, 90, 500, 480, 470)
-    assert s.regime == REDUCE and s.base_position == 0.80 and s.base_leverage == 1.3
+    assert s.regime == REDUCE and s.base_position == 0.80 and s.base_leverage == 1.0
 
 def test_defense():
     s = detect_regime(85, 100, 90, 500, 480, 470)
@@ -59,12 +59,12 @@ def test_double_break():
 
 
 # ---------------------------------------------------------------- 使用者端修飾
-def _sig(regime=OFFENSE, pos=0.95, lev=1.8):
+def _sig(regime=OFFENSE, pos=0.95, lev=1.3):
     return Signals(regime, pos, lev)
 
 def test_user_cap():
-    d = apply_modifiers(_sig(), user_leverage_cap=1.3)
-    assert d.leverage == 1.3 and d.exposure == pytest.approx(0.95 * 1.3)
+    d = apply_modifiers(_sig(), user_leverage_cap=1.1)
+    assert d.leverage == 1.1 and d.exposure == pytest.approx(0.95 * 1.1)
 
 def test_falsified_deduction():
     """證偽 → −20pp、槓桿鎖 1.0，優先於價格訊號。"""
@@ -74,7 +74,7 @@ def test_falsified_deduction():
 
 def test_breaker_review():
     d = apply_modifiers(_sig(), drawdown=-0.10)
-    assert d.breaker == "review" and d.leverage == 1.8
+    assert d.breaker == "review" and d.leverage == 1.3
 
 def test_breaker_force():
     d = apply_modifiers(_sig(), drawdown=-0.15)

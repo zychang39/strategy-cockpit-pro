@@ -196,3 +196,28 @@ canvas { max-width: 100%; }
 .kv .k { color: var(--text-2); }
 .kv .v { font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; }
 hr.sep { border: none; border-top: 0.5px solid var(--sep); margin: 10px 0; }
+
+/* ---- 下單頁：主題分組與論述卡 ---- */
+.theme-head {
+  padding: 16px 4px 8px;
+  position: sticky; top: 0; z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+details.thesis {
+  margin-top: 10px; border-radius: 10px;
+  background: var(--fill-2); overflow: hidden;
+}
+details.thesis summary {
+  cursor: pointer; padding: 10px 12px; min-height: 44px;
+  display: flex; align-items: center;
+  font-size: 13px; font-weight: 600; color: var(--tint);
+  list-style: none;
+}
+details.thesis summary::-webkit-details-marker { display: none; }
+details.thesis summary::before { content: "▸ "; margin-right: 4px; transition: transform 0.2s; }
+details.thesis[open] summary::before { content: "▾ "; }
+.thesis-body { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+.trow { display: grid; grid-template-columns: 72px 1fr; gap: 8px; font-size: 13px; line-height: 18px; }
+.trow .tk { color: var(--text-2); font-weight: 600; flex-shrink: 0; }

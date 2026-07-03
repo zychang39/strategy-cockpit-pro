@@ -41,7 +41,10 @@ export function Alloc({ st }) {
         <div class="cap">槓桿上限：<b class="num">{Number(user.levCap).toFixed(1)}×</b></div>
         <input type="range" min="1" max="1.8" step="0.1" value={user.levCap}
           onInput={(e) => setKv("levCap", Number(e.currentTarget.value))} />
-        <div class="cap3">制度允許槓桿仍以此為上限；防守制度一律 1.0×。</div>
+        <div class="cap3">槓桿只在站上 30MA（進攻）時動用；減碼/防守一律 1.0×。</div>
+        {user.levCap > 1.31 && (
+          <div class="banner amber" style="margin:8px 0 0">⚠ 1.3× 以上在本框架沒有支持理由——「如果回檔讓你有壓力，我建議不要。」僅供壓力測試。</div>
+        )}
       </div>
 
       <div class="card">

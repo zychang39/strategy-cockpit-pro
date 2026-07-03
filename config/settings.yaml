@@ -6,7 +6,8 @@ margin:
   tw_maintenance_alert: 1.3 # 台股維持率警戒線 130%
   us_maintenance: 0.3       # 美股維持保證金 30%
 
-leverage_cap_default: 1.8   # 使用者槓桿上限預設（1.0–1.8，前端可改）
+leverage_cap_default: 1.3   # 槓桿原則：僅站上 30MA（進攻）才動用，上限 1.3×。
+                            # 1.8× 在本框架無支持理由，滑桿仍可調到 1.8 供壓力測試。
 
 leaps:
   symbols: [GOOGL, AMZN, NVDA, MU, TER, AVGO]  # 僅這些提供方案 B

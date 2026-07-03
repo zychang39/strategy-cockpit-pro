@@ -47,8 +47,10 @@ export function Today({ st }) {
       {signals?.rotation && (
         <div class="card accent">
           <div class="row"><strong style="color:var(--tint)">⇄ 資金輪動訊號</strong></div>
-          <p style="margin-top:8px">SOX 破 30MA 而 QQQ 未破 —— 加碼 <strong>GOOGL / AMZN / NVDA</strong>，
-            等比減碼半導體供應鏈主題。階段②的「CSP 觸發倉」已自動啟用。</p>
+          <p style="margin-top:8px">SOX 破 30MA 而 QQQ 未破——<strong>市場正在用股價投票</strong>。
+            加碼 <strong>GOOGL / AMZN / NVDA</strong>，等比減碼半導體供應鏈主題。階段②的「CSP 觸發倉」已自動啟用。</p>
+          <p class="cap" style="margin-top:6px">論述：2023 年購入的 H 系列伺服器 2027–28 折舊到期；
+            當 CAPEX YoY（~30%）低於 RPO YoY，CSP 營業現金流轉正（檢查點⑦）。持有到折舊紅利兌現。</p>
         </div>
       )}
       {signals?.glue && (
@@ -56,6 +58,9 @@ export function Today({ st }) {
       )}
       {signals?.double_break && (
         <div class="banner amber">◆ 系統性回檔警示：SOX 與 QQQ 同破 30MA，channel check 改為每兩週。</div>
+      )}
+      {signals?.regime === "reduce" && (
+        <div class="banner blue">◆ 減碼制度：跌破 30MA——先把槓桿歸 1.0×，再降現股倉位至 80%。不頭鐵、不逆勢。</div>
       )}
       {signals?.regime === "defense" && (
         <div class="banner blue">▼ 防守制度：禁用融資與槓桿型選擇權；下單頁僅顯示觀察價（60MA）。</div>
