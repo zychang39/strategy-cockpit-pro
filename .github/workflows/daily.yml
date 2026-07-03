@@ -6,12 +6,10 @@ on:
     - cron: "30 22 * * *"
     - cron: "30 6 * * *"
   workflow_dispatch: {}
-  push:            # 首次部署（或修改本檔）時自動跑第一次抓價
-    branches: [main]
-    paths: [".github/workflows/daily.yml"]
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   fetch:
@@ -35,4 +33,7 @@ jobs:
           git add data/ config/targets.yaml
           git diff --cached --quiet || git commit -m "data: $(date -u +%F_%H%M)"
           git push
-     
+      - name: trigger deploy
+        run: gh workflow run deploy.yml --ref ${{ github.ref_name }}
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -31,7 +31,7 @@ jobs:
           cd web
           npm ci || npm install
           npm run build
-      - uses: actions/configure-pages@v5   # 首次自動啟用 Pages（免手動設定）
+      - uses: actions/configure-pages@v5
         with:
           enablement: true
       - uses: actions/upload-pages-artifact@v3
@@ -41,4 +41,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: githu
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
