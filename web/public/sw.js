@@ -1,5 +1,5 @@
 // Service Worker — 殼層 cache-first、資料 network-first（離線回退最後一份）
-const VERSION = "scp-v4";
+const VERSION = "scp-v5";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {

@@ -11,8 +11,14 @@ const LEV_OPTS = [1.0, 1.1, 1.2, 1.3, 1.5, 1.8];
 
 function wan(v) { return v >= 10000 ? (v / 10000).toLocaleString("zh-TW") + " 萬" : v; }
 
-function ControlCard({ st, phase, phases, directive, signals }) {
+function ControlCard({ st, phase, phases, directive, signals, preview, setPreview }) {
   const { user, setKv } = st;
+  const locked = directive.leverage <= 1;   // 制度鎖 1.0×
+  const pickLev = (v) => {
+    setKv("levCap", v);
+    if (locked && v > 1.001) setPreview(true);   // 鎖定時點槓桿 → 自動進入預演
+    if (v <= 1.001) setPreview(false);
+  };
   const [editCap, setEditCap] = useState(false);
   const step = (d) => setKv("capital", Math.max(0, (user.capital || 0) + d));
 
@@ -57,12 +63,22 @@ function ControlCard({ st, phase, phases, directive, signals }) {
         {LEV_OPTS.map((v) => (
           <button key={v}
             class={"chip-select num" + (Math.abs(user.levCap - v) < 0.01 ? " active" : "") + (v > 1.31 ? " warn" : "")}
-            onClick={() => setKv("levCap", v)}>{v.toFixed(1)}×</button>
+            onClick={() => pickLev(v)}>{v.toFixed(1)}×</button>
         ))}
       </div>
       {user.levCap > 1.31 && (
         <div class="cap3" style="color:var(--warn);margin-top:4px">⚠ 1.3× 以上在本框架無支持理由——「如果回檔讓你有壓力，我建議不要。」</div>
       )}
+      <div style="margin-top:8px">
+        <Segmented value={preview ? "preview" : "regime"} onChange={(v) => setPreview(v === "preview")} options={[
+          { value: "regime", label: "依今日制度" },
+          { value: "preview", label: "進攻預演" }]} />
+        <div class="cap3" style="margin-top:4px">
+          {preview
+            ? "預演：以進攻水位 95% × 你選的槓桿計算全頁（忽略今日制度與證偽/斷路器）。"
+            : locked ? "今日制度鎖 1.0×——選 1.1× 以上會自動切到預演看槓桿方案。" : "依今日制度計算。"}
+        </div>
+      </div>
       <hr class="sep" />
 
       {/* 台股槓桿工具 */}
@@ -80,14 +96,14 @@ function ControlCard({ st, phase, phases, directive, signals }) {
 
       {/* 即時摘要 */}
       <div class="grid2">
-        <div class="kv"><span class="k">制度</span><span class="v">{signals.regime_label}（允許 {directive.leverage.toFixed(1)}×）</span></div>
+        <div class="kv"><span class="k">制度</span><span class="v">{preview
+          ? <span class="badge warn">進攻預演 {directive.leverage.toFixed(1)}×</span>
+          : `${signals.regime_label}（允許 ${directive.leverage.toFixed(1)}×）`}</span></div>
         <div class="kv"><span class="k">目標總曝險</span><span class="v num" style="font-weight:700">{(directive.exposure * 100).toFixed(0)}%</span></div>
         <div class="kv"><span class="k">曝險金額</span><span class="v">{twd(user.capital * directive.exposure)}</span></div>
         <div class="kv"><span class="k">槓桿缺口</span><span class="v">{twd(user.capital * Math.max(directive.exposure - 1, 0))}</span></div>
       </div>
-      {directive.leverage <= 1 && user.levCap > 1 && (
-        <div class="cap3" style="margin-top:4px">目前制度鎖 1.0×——槓桿方案會在回到進攻制度（站上 30MA）時自動出現。「全股期」模式不受此限。</div>
-      )}
+
     </div>
   );
 }
@@ -242,15 +258,22 @@ function OrderCard({ o, regime }) {
 
 /* ---------- 頁面 ---------- */
 export function Orders({ st }) {
-  const { data, config, user, directive, signals, phase } = st;
+  const { data, config, user, directive: liveDirective, signals, phase } = st;
   const [showWeights, setShowWeights] = useState(false);
-  if (!data || !config || !signals || !directive || !phase) {
+  const [preview, setPreview] = useState(false);
+  if (!data || !config || !signals || !liveDirective || !phase) {
     return <div><h2 class="lt">下單</h2><div class="cap">等待資料…</div></div>;
   }
   const phases = config.phases?.phases || [];
 
+  // 進攻預演：95% 水位 × 使用者槓桿，全頁以此計算（含層別拆分與每檔股數）
+  const directive = preview
+    ? { position: 0.95, leverage: user.levCap, exposure: 0.95 * user.levCap, falsified: false, breaker: null, notes: [] }
+    : liveDirective;
+  const regime = preview ? "offense" : signals.regime;
+
   const result = buildOrders({
-    capital: user.capital, directive, regime: signals.regime, rotation: signals.rotation,
+    capital: user.capital, directive, regime, rotation: signals.rotation,
     phase, quotes: data.quotes, fx: data.fx, targets: config.targets,
     settings: config.settings, options: data.options,
     instruments: config.instruments?.instruments, twMode: user.twMode,
@@ -265,7 +288,15 @@ export function Orders({ st }) {
     <div>
       <h2 class="lt">下單</h2>
 
-      <ControlCard st={st} phase={phase} phases={phases} directive={directive} signals={signals} />
+      {preview && (
+        <div class="banner amber" style="position:sticky;top:8px;z-index:20">
+          ⚡ 進攻預演中——以 95% × {user.levCap.toFixed(1)}× ＝ 曝險 {(directive.exposure * 100).toFixed(0)}% 計算，
+          <b>非今日制度指令</b>（今日：{signals.regime_label} {(liveDirective.exposure * 100).toFixed(0)}%）。
+          <button class="btn small gray" style="margin-left:8px" onClick={() => setPreview(false)}>回到制度</button>
+        </div>
+      )}
+      <ControlCard st={st} phase={phase} phases={phases} directive={directive} signals={signals}
+        preview={preview} setPreview={setPreview} />
 
       <div class="card">
         <div class="row">
@@ -312,7 +343,7 @@ export function Orders({ st }) {
               </div>
               {g.theme.rotation_only && <span class="cap3">輪動觸發倉——僅輪動訊號成立時啟用</span>}
             </div>
-            {g.orders.map((o) => <OrderCard key={o.symbol} o={o} regime={signals.regime} />)}
+            {g.orders.map((o) => <OrderCard key={o.symbol} o={o} regime={regime} />)}
           </section>
         );
       })}
