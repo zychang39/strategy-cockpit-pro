@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     cfg = {}
-    for name in ("watchlist", "settings", "phases", "checkpoints", "strategy", "playbook"):
+    for name in ("watchlist", "settings", "phases", "checkpoints", "strategy", "playbook", "instruments"):
         p = ROOT / "config" / f"{name}.yaml"
         cfg[name] = yaml.safe_load(p.read_text(encoding="utf-8")) if p.exists() else None
     tp = ROOT / "config" / "targets.yaml"

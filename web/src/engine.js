@@ -83,6 +83,37 @@ export function marginPlanUs(amount, price, maintenance = 0.3) {
   return { loan: amount, alertPrice, alertDropPct: (alertPrice / price - 1) * 100 };
 }
 
+// ---- 台股個股期貨（永豐大戶投）：1 口 = 2,000 股 ----
+export function twFuturesPlan(targetLocal, price, f) {
+  const per = price * f.contract_shares;
+  const contracts = Math.floor(targetLocal / per);
+  const notional = contracts * per;
+  const bx = f.buffer_x || 2;
+  return {
+    contracts, notional,
+    residual: targetLocal - notional,           // 不足一口的零頭（現股或融資補）
+    eqShares: contracts * f.contract_shares,
+    marginMin: notional * f.initial_margin,     // 只放原始保證金
+    marginSug: notional * f.initial_margin * bx, // 建議入金（緩衝）
+    dropMin: (f.initial_margin - f.maintenance_margin) * 100,       // 只放最低 → 跌幾 % 補繳
+    dropSug: (f.initial_margin * bx - f.maintenance_margin) * 100,  // 放緩衝 → 跌幾 % 補繳
+    bufferX: bx,
+  };
+}
+
+// ---- 質押（不限用途借款）----
+export const pledgePlan = (gap, rate, ltv = 0.6) => ({
+  loan: gap, rate, ltv,
+  collateralNeeded: gap / ltv,  // 需質押的現股市值
+});
+
+// ---- IB margin（美股）----
+export function ibMarginPlan(gapTwd, price, b) {
+  const alertPrice = price * (b.initial_margin / (1 - b.maintenance_margin));
+  return { type: "ib", loan: gapTwd, rate: b.margin_rate,
+           alertPrice, alertDropPct: (alertPrice / price - 1) * 100 };
+}
+
 export function leapsPlan(gapUsd, price, delta = 0.8, strikeRatio = 0.8, opt = null) {
   const strike = opt?.strike ?? (Math.round((price * strikeRatio) / 5) * 5 || Math.round(price * strikeRatio * 10) / 10);
   const d = opt?.delta_est ?? delta;
@@ -113,7 +144,9 @@ export function currentPhase(phases, dateStr, overrideId = null) {
 }
 
 // ---- 下單頁主計算：每檔 → 目標市值/股數/限價/預期報酬/方案 A/B ----
-export function buildOrders({ capital, directive, regime, rotation, phase, quotes, fx, targets, settings, options }) {
+export function buildOrders({ capital, directive, regime, rotation, phase, quotes, fx, targets, settings, options, instruments, twMode = "mixed" }) {
+  const brokers = settings?.brokers || {};
+  const fut = brokers.tw?.futures;
   const { equity, gap } = splitLayers(capital, directive.exposure);
   const eqAlloc = themeAlloc(phase.themes, equity, rotation);
   const gapAlloc = regime === DEFENSE || directive.leverage <= 1
@@ -141,14 +174,58 @@ export function buildOrders({ capital, directive, regime, rotation, phase, quote
       o.expected = expectedReturns(q.price, targets?.[sym]);
       o.thesisExpired = targets?.[sym]?.thesis_expiry
         ? String(targets[sym].thesis_expiry) < new Date().toISOString().slice(0, 10) : false;
+      const inst = instruments?.[sym];
+      const hasFut = isTw && fut && inst?.futures;
+      // 全股期模式：整筆目標曝險（現股層+槓桿層）改用期貨
+      if (isTw && twMode === "futures" && hasFut) {
+        const totalTwd = amount + o.gapValueTwd;
+        const ff = twFuturesPlan(totalTwd, q.price, fut);
+        if (ff.contracts >= 1) o.futFull = ff;
+      }
+      if (o.futFull) {
+        o.futFull.liquid = inst.liquid !== false;
+        o.futFull.fname = inst.fname;
+        o.shares = roundShares(o.futFull.residual / q.price, q.category); // 零頭用現股
+        o.actualValueTwd = o.futFull.notional + o.shares * q.price;
+      }
       if (o.gapValueTwd > 0) {
-        o.planA = isTw
-          ? { type: "tw", ...marginPlanTw(o.gapValueTwd, q.price, m.tw_initial ?? 0.4, m.tw_maintenance_alert ?? 1.3), rate: m.tw_rate ?? 0.065 }
-          : { type: "us", ...marginPlanUs(o.gapValueTwd, q.price, m.us_maintenance ?? 0.3), rate: m.us_rate ?? 0.07 };
-        if (q.category === "us" && leapsSet.has(sym)) {
-          o.planB = leapsPlan(o.gapValueTwd / (fx?.USDTWD || 1), q.price,
-            (leapsCfg.delta_low + leapsCfg.delta_high) / 2 || 0.8,
-            leapsCfg.strike_ratio ?? 0.8, options?.[sym] || null);
+        if (isTw && o.futFull) {
+          // 全股期：缺口已含在期貨口數內，不另計融資
+        } else if (isTw) {
+          if (twMode !== "financing" && hasFut && twMode !== "futures") {
+            // 混搭：槓桿缺口優先股期；不足一口整筆退融資
+            const fg = twFuturesPlan(o.gapValueTwd, q.price, fut);
+            if (fg.contracts >= 1) {
+              fg.liquid = inst.liquid !== false;
+              fg.fname = inst.fname;
+              o.futGap = fg;
+              if (fg.residual > q.price * 500) {
+                o.planA = { type: "tw", ...marginPlanTw(fg.residual, q.price,
+                  m.tw_initial ?? 0.4, m.tw_maintenance_alert ?? 1.3),
+                  rate: brokers.tw?.financing_rate ?? 0.065 };
+              }
+            } else {
+              o.planA = { type: "tw", ...marginPlanTw(o.gapValueTwd, q.price,
+                m.tw_initial ?? 0.4, m.tw_maintenance_alert ?? 1.3),
+                rate: brokers.tw?.financing_rate ?? 0.065 };
+            }
+          } else {
+            o.planA = { type: "tw", ...marginPlanTw(o.gapValueTwd, q.price,
+              m.tw_initial ?? 0.4, m.tw_maintenance_alert ?? 1.3),
+              rate: brokers.tw?.financing_rate ?? 0.065 };
+          }
+          o.pledge = pledgePlan(o.gapValueTwd, brokers.tw?.pledge_rate ?? 0.03,
+            brokers.tw?.pledge_ltv ?? 0.6);
+          o.noFutNote = !hasFut ? inst?.note : null;
+        } else {
+          o.planA = brokers.us
+            ? ibMarginPlan(o.gapValueTwd, q.price, brokers.us)
+            : { type: "us", ...marginPlanUs(o.gapValueTwd, q.price, m.us_maintenance ?? 0.3), rate: m.us_rate ?? 0.07 };
+          if (q.category === "us" && leapsSet.has(sym)) {
+            o.planB = leapsPlan(o.gapValueTwd / (fx?.USDTWD || 1), q.price,
+              (leapsCfg.delta_low + leapsCfg.delta_high) / 2 || 0.8,
+              leapsCfg.strike_ratio ?? 0.8, options?.[sym] || null);
+          }
         }
       }
     }

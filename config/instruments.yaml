@@ -1,0 +1,9 @@
+# 台股個股期貨可用性（永豐大戶投下單）——依實際流動性自行修訂
+# futures: 是否有個股期；liquid: 近月價差/深度是否可接受
+instruments:
+  2330.TW: {futures: true,  liquid: true,  fname: 台積電期貨, note: 最深的個股期，首選}
+  2454.TW: {futures: true,  liquid: true,  fname: 聯發科期貨, note: 流動性佳}
+  2308.TW: {futures: true,  liquid: true,  fname: 台達電期貨, note: 流動性佳}
+  2327.TW: {futures: true,  liquid: false, fname: 國巨期貨,   note: 深度中等——限價分批、避免市價單}
+  6187.TWO: {futures: false, note: 無流通個股期 → 槓桿缺口用融資或質押}
+  6223.TWO: {futures: false, note: 股期極淺 → 槓桿缺口用融資或質押}

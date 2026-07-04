@@ -37,3 +37,20 @@ targets_multipliers:         # §3.1 初始目標價之主題倍數（base = 現
   cpo: 1.5
   bb: 1.8
   default: 1.2
+
+brokers:                      # 券商執行參數（依實際帳戶條件修改）
+  tw:
+    name: 永豐大戶投
+    financing_rate: 0.065     # 融資年利率
+    pledge_rate: 0.03         # 股票質押/不限用途借款年利率（依核貸條件改）
+    pledge_ltv: 0.6           # 質押成數
+    futures:
+      contract_shares: 2000   # 個股期貨 1 口 = 2,000 股（2 張）
+      initial_margin: 0.135   # 原始保證金（期交所級距 A，請依公告調整）
+      maintenance_margin: 0.1035  # 維持保證金
+      buffer_x: 2             # 建議入金 = 原始保證金 × 此倍數（抗波動）
+  us:
+    name: IB 盈透
+    margin_rate: 0.06         # IB USD 融資年利率（分層計息，依帳戶級距改）
+    initial_margin: 0.5       # Reg-T 初始 50%
+    maintenance_margin: 0.25  # 維持 25%

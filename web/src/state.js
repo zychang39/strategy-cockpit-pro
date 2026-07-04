@@ -11,7 +11,7 @@ export function useAppState() {
   const [loadError, setLoadError] = useState(null);
   const [user, setUser] = useState({
     capital: 1_000_000, levCap: 1.3, phaseOverride: null,
-    checkpoints: {}, triggers: {}, nav: [], holdings: [], gClientId: "", gLastSync: null,
+    checkpoints: {}, triggers: {}, nav: [], holdings: [], gClientId: "", gLastSync: null, twMode: "mixed",
   });
   const [tick, setTick] = useState(0);
   const refreshUser = useCallback(() => setTick((t) => t + 1), []);
@@ -36,6 +36,7 @@ export function useAppState() {
         phaseOverride: await kvGet("phaseOverride", null),
         checkpoints: await kvGet("checkpoints", {}),
         triggers: await kvGet("triggers", {}),
+        twMode: await kvGet("twMode", "mixed"),
         nav: await navAll(),
         holdings: await holdingsAll(),
         gClientId: await kvGet("gClientId", ""),
@@ -44,7 +45,11 @@ export function useAppState() {
     })();
   }, [tick]);
 
-  const setKv = async (k, v) => { await kvSet(k, v); refreshUser(); };
+  // 樂觀更新：先改記憶體讓 UI 立即重算，再背景寫入 IndexedDB
+  const setKv = (k, v) => {
+    setUser((u) => ({ ...u, [k]: v }));
+    kvSet(k, v).catch(() => {});
+  };
 
   // ---- 衍生 ----
   const signals = data?.signals || null;

@@ -53,7 +53,7 @@ export const holdingDel = (symbol) => tx("holdings", "readwrite", (s) => s.delet
 
 // ---- 匯出 / 匯入（手機 ↔ Mac 同步用）----
 export async function exportState() {
-  const keys = ["capital", "levCap", "checkpoints", "triggers", "phaseOverride", "gClientId"];
+  const keys = ["capital", "levCap", "checkpoints", "triggers", "phaseOverride", "gClientId", "twMode"];
   const kv = {};
   for (const k of keys) kv[k] = await kvGet(k);
   return {
