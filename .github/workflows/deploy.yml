@@ -25,9 +25,10 @@ jobs:
           node-version: "22"
       - name: build web
         run: |
-          mkdir -p web/public/data/history
+          mkdir -p web/public/data/history web/public/data/quotes
           cp data/latest.json data/config.json web/public/data/ || echo "no data yet"
           cp data/history/*.json web/public/data/history/ 2>/dev/null || true
+          cp data/quotes/*.json web/public/data/quotes/ 2>/dev/null || true
           cd web
           npm ci || npm install
           npm run build
