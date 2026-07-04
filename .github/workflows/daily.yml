@@ -6,6 +6,9 @@ on:
     - cron: "30 22 * * *"
     - cron: "30 6 * * *"
   workflow_dispatch: {}
+  push:              # 修改本檔即觸發一次抓價（手動觸發備援）
+    branches: [main]
+    paths: [".github/workflows/daily.yml"]
 
 permissions:
   contents: write
