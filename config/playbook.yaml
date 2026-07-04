@@ -1,0 +1,89 @@
+# 觸發劇本（若 A 發生 → 買/做 B）＋ 作者持倉快照 — 前端「劇本」tab
+# 來源：2026-07-02 直播 Part2 + Part1。auto: rotation 的劇本由系統即時判定，其餘手動標記。
+triggers:
+  - id: rotation_csp
+    when: 費半跌破 30 日均線、QQQ 未跌破——「市場用股價投票」
+    action: 從半導體供應鏈搬部分資金回 CSP；買回 GOOGL、AMZN（可含 NVDA）
+    tickers: [GOOGL, AMZN, NVDA]
+    auto: rotation
+    window: 隨時（作者明說「我可能會回去買」，現無持倉）
+    note: 底層論述——2023 H 系列伺服器 2027–28 折舊到期，攤提結束後租出算力為純利；CAPEX YoY(~30%) < RPO YoY → 營業現金流轉正。RPO 具法律效力、不可取消。
+  - id: ter_earnings
+    when: Teradyne 下半年財報不理想、股價回檔
+    action: 逢弱分批建倉（事件型 3–9 月起，主線抱至 2027 CPO 放量）
+    tickers: [TER]
+    window: 2026 H2 財報季
+    note: WLT T2 CPO 測試機 70→200 台；Rubin GPU 測試搶 Advantest（10%→30%）；與宏捷在 Insertion 4 合作確認未變、台積電站點主導。
+  - id: optics_rebuy
+    when: 光通訊回檔至估值錨（LITE：EPS $30 × 35 倍 ≈ $1,000+ 之下的合理位置）
+    action: 買回雷射光源廠（作者已砍 LITE/Nokia，帳上僅剩 COHR，「下半年我傾向找時機買回」）
+    tickers: [LITE, COHR]
+    window: 2026 H2
+    note: 1.6T 後 channel loss 物理極限 → 2028 全光；1.6T 光模組單價 ≈ 800G × 1.8。賣方報告有人給 50 倍，作者給 35 倍。
+  - id: nokia_rebuy
+    when: Nokia 標案催化再現（標案已開到 2027；DCI/機櫃間互聯為下一爆發點）
+    action: 買回 NOK（破線砍掉，非不看好——「我蠻喜歡的，但破線了」）
+    tickers: [NOK]
+    window: 2026 H2–2027
+    note: Nokimp 基板 28 年量產 on track。
+  - id: mlcc_expansion
+    when: MLCC 廠宣布擴產（判斷 2027 年底前後「受不了」）
+    action: P×Q 事件交易——擴產宣布前多輪漲價續抱，宣布後事件模式進出（3–9 月）
+    tickers: [MRAAY, 2327.TW]
+    window: ~2027 年底
+    note: 高階 MLCC 產能消耗 2.8–4 倍；Q3 產能轉移 10–20%、年底 ~20%。宣布擴產＝檢查點⑤切換事件模式。
+  - id: bb_validation
+    when: 2027 下半年看到 Physical AI 量產驗證證據（Thor 晶片實際搭載出貨）
+    action: 加碼 BB（現階段僅 ≤5% 選擇權倉）
+    tickers: [BB]
+    window: 2027 H2–2028
+    note: 2026-04-20 QNX×IGX Thor OS 級整合；每顆晶片付權利金；SAM 2029 ~59 億美元（未含 IGX 貢獻）vs 市值 60–70 億。
+  - id: tsmc_capex
+    when: 台積電財報上修下半年 CAPEX（三年合計看 2,200 億美元）
+    action: 設備股續抱加碼（AMAT/ONTO/UCTT/KLIC）；Intel、三星、海力士需求未進模型＝上修空間
+    tickers: [AMAT, ONTO, ASML, UCTT, KLIC]
+    window: 2026 H2 財報季
+    note: 無塵室是擴產瓶頸——UCTT 直接受惠。KLIC 已過台積電認證（SMPT 沒過）、MU/台積電已拉貨。
+  - id: delta_sic
+    when: 台達電 SiC 供應鏈引入 Wolfspeed（Infineon 份額 90→70）獲更多驗證
+    action: WOLF 觀察倉轉正式部位（配合 800V HVDC 2028 底滲透 10–20%）
+    tickers: [WOLF, 2308.TW]
+    window: 2027–2028
+    note: Wolfspeed 8 吋良率不錯；AI 伺服器轉型改善財務。
+  - id: memory_ceiling
+    when: 記憶體 LTA 天花板（~30%）壓縮漲幅、週期吸引力下降
+    action: 不急著砍——等擴產宣布的 P×Q 放大效應；LTA 違約金已 100% + 第三方託管＝定價權仍強
+    tickers: [MU, SNDK, STX, WDC, KXIAY]
+    window: 持續監控（檢查點⑥）
+    note: 長約三至五年、鎖量+天花板價；矽晶圓因 HBM4 消耗翻倍進入去庫存循環。
+
+author_portfolio:
+  as_of: 2026-07-02
+  note: 作者自揭配比（Part2 直播）。僅供對照，非跟單建議。
+  items:
+    - label: 記憶體
+      weight: ~30%
+      tickers: [MU, SNDK, STX, WDC, KXIAY]
+    - label: MLCC
+      weight: ~20%
+      tickers: [MRAAY, 2327.TW]
+    - label: 設備
+      weight: 15–20%
+      tickers: [AMAT, ONTO, ASML, UCTT, KLIC]
+      note: Applied Materials 配置較多；KLIC 小部位「站票」
+    - label: CPU / 代工
+      weight: 有配置
+      tickers: [INTC]
+      note: 「CPU 主要配置 Intel」
+    - label: 光纖 / 光通訊
+      weight: 少量
+      tickers: [GLW, COHR]
+      note: 持有康寧（看光纖不看玻璃橋）；光通訊破線砍剩 COHR
+    - label: 矽光 / DSP
+      weight: 最近回補
+      tickers: [CRDO]
+      note: 收購光通訊廠後涉足矽光、接觸 CSP 訂單
+    - label: 功率半導體
+      weight: 少量
+      tickers: [WOLF]
+      note: 觀察性質

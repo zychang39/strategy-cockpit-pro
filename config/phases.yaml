@@ -10,13 +10,13 @@ phases:
       - name: 記憶體/HDD
         theme_key: memory_hdd
         weight: 0.30
-        tickers: [MU, SNDK, STX, WDC, 285A.T]
+        tickers: [MU, SNDK, STX, WDC, KXIAY]
         hold: 12–24月
         exit: HDD 報價 < $22/TB 或缺口收窄
       - name: MLCC
         theme_key: mlcc
         weight: 0.20
-        tickers: [6981.T, 2327.TW]
+        tickers: [MRAAY, 2327.TW]
         hold: 12–18月
         exit: 提早擴產宣布或需求斷
       - name: 半導體設備
@@ -56,7 +56,7 @@ phases:
       - name: MLCC
         theme_key: mlcc
         weight: 0.18
-        tickers: [6981.T, 2327.TW]
+        tickers: [MRAAY, 2327.TW]
         hold: 續抱
         exit: 提早擴產宣布或需求斷
       - name: 設備
@@ -121,7 +121,7 @@ phases:
       - name: MLCC 擴產事件
         theme_key: mlcc
         weight: 0.15
-        tickers: [6981.T, 2327.TW]
+        tickers: [MRAAY, 2327.TW]
         hold: 事件型 3–9月
         exit: 2027 年終擴產宣布 = P×Q 事件
       - name: 現金
@@ -161,7 +161,7 @@ phases:
       - name: 記憶體/MLCC 收割
         theme_key: memory_hdd
         weight: 0.20
-        tickers: [MU, 6981.T]
+        tickers: [MU, MRAAY]
         hold: 依缺口訊號退出
         exit: ""
       - name: 現金

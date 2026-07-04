@@ -16,7 +16,8 @@ export const NAMES = {
   AVGO: "博通", GLW: "康寧", INTC: "英特爾", AMAT: "應用材料", ONTO: "Onto",
   ASML: "艾司摩爾", UCTT: "Ultra Clean", KLIC: "K&S", BB: "BlackBerry", WOLF: "Wolfspeed",
   "2330.TW": "台積電", "2454.TW": "聯發科", "2327.TW": "國巨", "2308.TW": "台達電",
-  "6187.TWO": "萬潤", "6223.TWO": "旺矽", "6981.T": "村田製作所", "285A.T": "Kioxia",
+  "6187.TWO": "萬潤", "6223.TWO": "旺矽", MRAAY: "村田 ADR", KXIAY: "Kioxia ADR",
+  CRDO: "Credo", NOK: "諾基亞",
 };
 
 const BASE = import.meta.env.BASE_URL || "./";

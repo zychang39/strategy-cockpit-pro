@@ -285,11 +285,30 @@ def ticker_theme_keys(phases):
 
 
 def gen_targets(quotes, phases, settings, path, force=False):
-    if path.exists() and not force:
-        print(f"[targets] {path} 已存在，跳過（--force-targets 可覆蓋）")
-        return
     mult = settings["targets_multipliers"]
     keys = ticker_theme_keys(phases)
+    if path.exists() and not force:
+        existing = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("targets") or {}
+        missing = [sym for sym in keys if sym not in existing]
+        if not missing:
+            print(f"[targets] {path} 已存在且無缺漏，跳過")
+            return
+        lines = [path.read_text(encoding="utf-8").rstrip()]
+        for sym in missing:
+            q = quotes.get(sym) or {}
+            p_ = q.get("price")
+            if not p_:
+                lines.append(f"  {sym}: {{bear: null, base: null, bull: null, "
+                             f"thesis_expiry: 2028-07-03}}  # 無報價，請手動補")
+                continue
+            m = mult.get(keys[sym], mult["default"])
+            base = round(p_ * m, 2)
+            lines.append(f"  {sym}: {{bear: {round(p_*0.75,2)}, base: {base}, "
+                         f"bull: {round(base*1.35,2)}, thesis_expiry: 2028-07-03}}"
+                         f"  # 佔位初始值：現價 {p_} × {m}（{keys[sym]}）")
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"[targets] 併入 {len(missing)} 檔新標的：{missing}")
+        return
     lines = [
         "# 論述目標價（三情境）— 初始值由 fetch.py 以建置時現價自動生成，僅為佔位。",
         "# base = 現價 × 主題倍數；bull = base × 1.35；bear = 現價 × 0.75。",
@@ -331,6 +350,26 @@ def main():
             cat = "fx" if category == "fx" else category
             print(f"fetching {sym} ({cat}) ...", flush=True)
             quotes[sym] = fetch_one(sym, cat)
+
+    # 台股官方收盤價校正：yfinance 偶爾給到延遲或盤中價（如 2327 1055 vs 官方 1045）
+    for sym, q in quotes.items():
+        if q.get("error") or q.get("price") is None:
+            continue
+        try:
+            if q["category"] == "tw":
+                official = twse_quote(sym)[0]
+            elif q["category"] == "two":
+                official = tpex_quote(sym)[0]
+            else:
+                continue
+            if official and abs(official - q["price"]) / q["price"] > 0.0005:
+                print(f"  [close-fix] {sym}: {q['price']} -> {official} (官方收盤)")
+                q["price"] = official
+                if q.get("prev_close"):
+                    q["change_pct"] = round((official / q["prev_close"] - 1) * 100, 2)
+                q["source"] = (q.get("source") or "") + "+official-close"
+        except Exception:  # noqa: BLE001
+            pass
 
     # 訊號（^SOX / QQQ 缺料 → signals 為 null，前端顯示資料缺漏）
     sox, qqq = quotes.get("^SOX") or {}, quotes.get("QQQ") or {}

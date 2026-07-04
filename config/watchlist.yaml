@@ -27,6 +27,10 @@ us:
   - KLIC
   - BB
   - WOLF
+  - CRDO
+  - NOK
+  - MRAAY   # 村田 ADR（原 6981.T，改用美股較易下單）
+  - KXIAY   # Kioxia ADR（原 285A.T）
 tw:            # 上市（備援 TWSE OpenAPI）
   - 2330.TW
   - 2454.TW
@@ -35,9 +39,7 @@ tw:            # 上市（備援 TWSE OpenAPI）
 two:           # 上櫃（備援 TPEx / FinMind）
   - 6187.TWO
   - 6223.TWO
-jp:
-  - 6981.T
-  - 285A.T
+jp: []      # 日股已改用美股 ADR（MRAAY、KXIAY）
 fx:
   - TWD=X      # USD/TWD
   - JPY=X      # USD/JPY（供日股換算 TWD）

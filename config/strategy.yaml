@@ -13,14 +13,25 @@ disciplines:
 stages:
   - id: 1
     name: 階段①
-    period: 本季（2026 Q3）
+    period: 2026-07-03 ～ 2026-09-30（本季）
+    start: 2026-07-03
+    end: 2026-09-30
+    entry_signal: 現在——依作者自揭持倉直接建立
+    transition:
+      to: 階段②（2026-10-01 起）
+      watch: 台積電 Q3 財報 CAPEX 指引（~10月中）、TER Q3 財報（~10月底）、LITE/COHR 回檔幅度
+      actions:
+        - 「TER 財報弱勢」出現 → 動用 5% 現金分批建倉 TER（目標 12%）
+        - LITE 回到估值錨下緣（EPS $30×35 倍以下） → 回補光通訊（目標 12%）
+        - 記憶體 30→25%、MLCC 20→18%、設備 18→15%：獲利部位等比減碼騰出資金，不砍論述最強的 HDD
+        - 若期間出現輪動訊號（SOX破30MA、QQQ未破） → 提前啟用 CSP 觸發倉（GOOGL/AMZN 13%）
     summary: 以作者自揭持倉為藍本：記憶體 ~30%、MLCC ~20%、設備 15–20%、其他。
     plays:
       - title: 記憶體 ~30%
-        tickers: [MU, SNDK, STX, WDC, 285A.T]
+        tickers: [MU, SNDK, STX, WDC, KXIAY]
         body: HDD 是最強調的「最大預期差」——供需缺口約 30%、報價 $25/TB vs 賣方預期 $20、PE 約 10 倍。DRAM/NAND 在 LTA 天花板內連續調漲。
       - title: MLCC ~20%
-        tickers: [6981.T, 2327.TW]
+        tickers: [MRAAY, 2327.TW]
         body: Rubin 單櫃用量約 100 萬顆（GB300 的兩倍多）；Murata 2027 年 25 倍「算中性」。
       - title: 設備 15–20%
         tickers: [AMAT, ONTO, ASML, UCTT, KLIC, 2330.TW]
@@ -31,7 +42,19 @@ stages:
     avoid: 「Teradyne 下半年財報可能不理想…投資人可能對財報感到不適，需先做好心理準備」——財報回檔反而是佈局點。光通訊已破線砍掉（Lumentum、Nokia），先不追。
   - id: 2
     name: 階段②
-    period: 半年內（2026 Q4 – 2027 Q1）
+    period: 2026-10-01 ～ 2027-03-31
+    start: 2026-10-01
+    end: 2027-03-31
+    entry_signal: TER/台積電 Q3 財報公布後啟動換倉
+    transition:
+      to: 階段③（2027-04-01 起）
+      watch: 2027 年初五大 CSP CAPEX 指引（最早證偽點①）、TER CPO 出貨口徑（證偽點②）、TPU 出貨進度
+      actions:
+        - CSP CAPEX 指引 ≥ +25% 驗證 → 加碼 Google TPU 鏈至 28%（2454 為台股主軸、MRVL/ALAB 分批）
+        - CSP CAPEX 指引令人失望（<15%） → 檢查點①切「證偽」：全站 −20pp、槓桿鎖 1.0
+        - 記憶體 25→15% 轉收割模式：只留 MU/STX/SNDK，WDC 獲利了結
+        - CPO 測試/封裝建倉（TER 續抱 + AMKR/6187/6223 合計 16%）
+        - CSP 觸發倉轉常設 18%（GOOGL/AMZN/NVDA）
     summary: 回補光通訊、TER 逢財報弱勢建倉、CSP 檢查點武裝待發。
     plays:
       - title: 回補光通訊
@@ -45,7 +68,19 @@ stages:
         body: 一旦費半破 30MA 而 QQQ 沒破 → 加 GOOGL、AMZN（「我可能會回去買」）。
   - id: 3
     name: 階段③
-    period: 一年（2027 全年）
+    period: 2027-04-01 ～ 2027-12-31
+    start: 2027-04-01
+    end: 2027-12-31
+    entry_signal: 2027 年初 CSP CAPEX 指引驗證後全面換至 Google 鏈主軸
+    transition:
+      to: 階段④（2028-01-01 起）
+      watch: MLCC 擴產宣布（判斷 2027 年底）、BB/Thor 量產驗證證據（2027 H2）、光引擎放量口徑
+      actions:
+        - MLCC 擴產宣布 → P×Q 事件兌現後 3–9 月內獲利了結，MLCC 15%→收割
+        - 2027 H2 見 Physical AI 量產證據 → BB 小倉建立（上限 5%）
+        - 記憶體 HDD 缺口收窄或報價 <$22/TB → 不等破線直接退出
+        - 年終前保留 8% 現金等擴產事件；CPO 主題（TER/LITE/COHR/AMKR）加至 25%
+        - 800V HVDC 開始建倉（2308/WOLF 合計 15%）
     summary: 核心論述：2027 CSP CAPEX +30% vs 彭博共識 +12%；「真正受惠者可能是 Google 及其供應鏈，而非 NVIDIA」。TPU 2027 出貨 1,000 萬顆 > NVIDIA GPGPU 750 萬顆（衰退）。
     plays:
       - title: Google TPU 鏈（本階段主軸）
@@ -55,11 +90,21 @@ stages:
         tickers: [6187.TWO, 6223.TWO, AMKR]
         body: 萬潤、旺矽（「我個人蠻喜歡 MPI」）；AMKR 拿 Vera CPO 封裝 ~70% 訂單，模型還有 10–20% 上修。
       - title: 2027 年底關鍵事件：MLCC 擴產宣布
-        tickers: [6981.T, 2327.TW]
+        tickers: [MRAAY, 2327.TW]
         body: 「積極投資人會賭擴產時點…可以預期 2027 年年終左右會受不了。」擴產前還有多輪漲價；擴產宣布＝P×Q 噴出。
   - id: 4
     name: 階段④
-    period: 兩年（2028 上半年前後）
+    period: 2028-01-01 ～ 2028-07-03
+    start: 2028-01-01
+    end: 2028-07-03
+    entry_signal: CPO scale-up 放量（光引擎 94萬→500萬顆）＋ 800V 滲透啟動
+    transition:
+      to: 策略終點（2028-07-03）——thesis_expiry 全面重估
+      watch: 週期後段訊號——記憶體/MLCC 擴產後供給釋出、CPO 滲透率是否照 5 倍軌跡、回撤斷路器
+      actions:
+        - 記憶體/MLCC 依缺口訊號分批收割（合計 20%→現金）
+        - 現金升至 13%，週期後段防守；任何主題破線照紀律砍，不戀棧
+        - 2028-07-03 目標價全面到期 → 重跑論述或清倉結算
     summary: CPO scale-up 放量、Physical AI 早期倉、800V HVDC。
     plays:
       - title: CPO scale-up 放量

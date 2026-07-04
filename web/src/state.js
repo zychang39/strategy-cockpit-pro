@@ -11,7 +11,7 @@ export function useAppState() {
   const [loadError, setLoadError] = useState(null);
   const [user, setUser] = useState({
     capital: 1_000_000, levCap: 1.3, phaseOverride: null,
-    checkpoints: {}, nav: [], holdings: [], gClientId: "", gLastSync: null,
+    checkpoints: {}, triggers: {}, nav: [], holdings: [], gClientId: "", gLastSync: null,
   });
   const [tick, setTick] = useState(0);
   const refreshUser = useCallback(() => setTick((t) => t + 1), []);
@@ -35,6 +35,7 @@ export function useAppState() {
         levCap: await kvGet("levCap", 1.3),
         phaseOverride: await kvGet("phaseOverride", null),
         checkpoints: await kvGet("checkpoints", {}),
+        triggers: await kvGet("triggers", {}),
         nav: await navAll(),
         holdings: await holdingsAll(),
         gClientId: await kvGet("gClientId", ""),

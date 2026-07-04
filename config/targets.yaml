@@ -6,8 +6,6 @@ targets:
   SNDK: {bear: 1308.75, base: 2443.0, bull: 3298.05, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1745.0 × 1.4（memory_hdd）
   STX: {bear: 615.12, base: 1148.22, bull: 1550.1, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 820.16 × 1.4（memory_hdd）
   WDC: {bear: 404.25, base: 754.6, bull: 1018.71, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 539.0 × 1.4（memory_hdd）
-  285A.T: {bear: 57195.0, base: 106764.0, bull: 144131.4, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 76260.0 × 1.4（memory_hdd）
-  6981.T: {bear: 8156.25, base: 14681.25, bull: 19819.69, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 10875.0 × 1.35（mlcc）
   2327.TW: {bear: 791.25, base: 1424.25, bull: 1922.74, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 1055.0 × 1.35（mlcc）
   AMAT: {bear: 452.28, base: 753.8, bull: 1017.63, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 603.04 × 1.25（equipment）
   ONTO: {bear: 230.69, base: 384.47, bull: 519.03, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 307.58 × 1.25（equipment）

@@ -37,7 +37,10 @@ export function Strategy({ st }) {
             ))}
           </div>
           <div class="card" style="margin-top:12px">
-            <div class="cap">{cur.period}</div>
+            <div class="row">
+              <span class="cap num" style="font-weight:700">{cur.period}</span>
+            </div>
+            {cur.entry_signal && <div class="cap3" style="margin-top:4px">進場訊號：{cur.entry_signal}</div>}
             <p style="margin-top:6px;font-weight:600">{cur.summary}</p>
           </div>
           {cur.plays.map((p) => (
@@ -49,6 +52,15 @@ export function Strategy({ st }) {
           ))}
           {cur.avoid && (
             <div class="banner amber">✋ 這階段要避開：{cur.avoid}</div>
+          )}
+          {cur.transition && (
+            <div class="card" style="border-left:3px solid var(--tint)">
+              <strong>⇢ 過渡計畫：{cur.transition.to}</strong>
+              <div class="cap" style="margin:8px 0 6px"><b>盯什麼：</b>{cur.transition.watch}</div>
+              {cur.transition.actions.map((a, i) => (
+                <p key={i} style="font-size:14px;line-height:19px;margin-bottom:6px">・{a}</p>
+              ))}
+            </div>
           )}
         </div>
       )}

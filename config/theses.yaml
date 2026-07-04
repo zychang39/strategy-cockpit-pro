@@ -23,15 +23,15 @@ theses:
     why: 同 HDD 缺口論述；NAND 業務分拆後純度提升
     upside: 同 STX 預期差邏輯
     risk: 同 STX 退出線
-  285A.T:
-    buy: 階段①複委託佈局（日股）
-    why: Kioxia——NAND 補漲循環，估值低於美系同業
+  KXIAY:
+    buy: 階段①佈局（Kioxia 美股 ADR，較日股易下單）
+    why: Kioxia——NAND 補漲循環；SSD 溫/熱資料需求強，SLC/MLC 提高讀寫次數量產無虞
     upside: NAND 漲價循環 + 日股半導體重估
-    risk: 流動性與匯率（JPY）雙重風險
+    risk: ADR 流動性較差；價格仍隨日股與 JPY 波動
   # ============ MLCC ============
-  6981.T:
-    buy: 階段①建倉、抱到 2027 年底擴產事件
-    why: Murata——Rubin 單櫃 MLCC 用量約 100 萬顆（GB300 的兩倍多）；2027 年 25 倍本益比「算中性」
+  MRAAY:
+    buy: 階段①建倉（Murata 美股 ADR）、抱到 2027 年底擴產事件
+    why: Murata——Rubin 單櫃 MLCC 用量約 100 萬顆；高階 MLCC 產能消耗為一般的 2.8–4 倍，Q3 產能轉移 10–20%、年底 ~20%
     upside: 擴產宣布（判斷 ~2027 年底）前有多輪漲價；宣布當下 P×Q 齊升是本論述最大事件
     risk: 提早擴產宣布或需求斷；缺口從 2,400 億顆縮至 ~1,000 億顆即警覺
   2327.TW:
@@ -47,7 +47,11 @@ theses:
     risk: 台積電 CAPEX 指引下修即退出（主題退出線）
   ONTO: *equip
   ASML: *equip
-  UCTT: *equip
+  UCTT:
+    buy: 階段①佈局；設備鏈中的瓶頸環節
+    why: 無塵室是擴產最重要的瓶頸——「為什麼沒有人問 UCTT？Ultra Clean 表現不錯」
+    upside: 台積電/海力士擴產直接受惠；Intel、三星需求未進模型＝上修空間
+    risk: 台積電 CAPEX 指引下修即退出
   KLIC: *equip
   2330.TW:
     buy: 階段①台股核心
@@ -72,9 +76,9 @@ theses:
     risk: 執行力紀錄差，僅配次要權重
   WOLF:
     buy: 觀察倉；階段④隨 800V 題材才加
-    why: SiC 功率——800V HVDC 供應鏈一環
-    upside: 2028 年底 HVDC 滲透率 10–20%
-    risk: 財務體質弱，破線即走
+    why: SiC 功率——8 吋良率不錯（領域龍頭）；台達電 SiC 原 ~90% 用 Infineon，正引入 Wolfspeed 分散供應（份額可望 90→70 讓出）
+    upside: 2028 年底 HVDC 滲透率 10–20%（Google/Meta/xAI 積極採用）；AI 伺服器轉型改善財務
+    risk: 過去財務差（電動車拖累）；破線即走
   # ============ 事件型：Teradyne ============
   TER:
     buy: 本季迴避！下半年財報「可能不理想」——財報弱勢回檔才分批建倉（事件型 3–9 個月起，主線可抱至 2027 CPO 放量）
@@ -144,6 +148,16 @@ theses:
     risk: 滲透節奏遞延
   BB:
     buy: 階段④小倉（上限 5%）；等 2027 下半年量產驗證證據出現再加
-    why: QNX 與 NVIDIA IGX Thor 做 OS 級整合——「每賣出一個晶片，NVIDIA 就要付 BlackBerry 權利金」
+    why: 2026-04-20 宣布 QNX OS for Safety 8.0 × NVIDIA IGX Thor 完成 OS 級整合（機器人/醫療/工業）——「每賣出一個晶片，NVIDIA 就要付 BlackBerry 權利金」；ASIL-D 認證、已量產驗證 2.75 億輛車
     upside: SAM 2029 約 59 億美元 vs 市值 60–70 億；權利金模式毛利極高
     risk: 「這些仍是早期」——選擇權性質，可歸零心態管理
+  CRDO:
+    buy: 作者已回補（收購光通訊廠商後）；隨矽光參與度提升
+    why: 收購後涉足 silicon photonics，channel check 顯示已接觸 CSP 訂單；光模組 DSP 打入中際旭創、新易盛
+    upside: AEC 老產品外新增矽光/DSP 成長曲線與估值加項
+    risk: AEC（3.5 米內短距）2027 後恐被 NVIDIA scale-up CPO 方案漸替代
+  NOK:
+    buy: 已破線砍掉——標案催化（開到 2027）再買回
+    why: NVIDIA 10 億美元策略投資；AI-RAN/6G 基站未來採購 NVIDIA GPU；DCI 與機櫃間互聯為下一爆發點
+    upside: 標案規模續開 + Nokimp 基板 2028 量產 on track
+    risk: 破線紀律優先；催化時點不確定

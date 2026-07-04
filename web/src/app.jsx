@@ -5,12 +5,14 @@ import { Today } from "./pages/today.jsx";
 import { Orders } from "./pages/orders.jsx";
 import { Strategy } from "./pages/strategy.jsx";
 import { Scenario } from "./pages/scenario.jsx";
+import { Playbook } from "./pages/playbook.jsx";
 import { Holdings } from "./pages/holdings.jsx";
 
 const TABS = [
   { id: "today", label: "今日", ico: "◉" },
   { id: "orders", label: "下單", ico: "≡" },
   { id: "strategy", label: "策略", ico: "❖" },
+  { id: "playbook", label: "劇本", ico: "⚡" },
   { id: "scenario", label: "情境", ico: "∿" },
   { id: "holdings", label: "持倉", ico: "✓" },
 ];
@@ -26,6 +28,7 @@ export function App() {
     today: <Today st={st} />,
     orders: <Orders st={st} />,
     strategy: <Strategy st={st} />,
+    playbook: <Playbook st={st} />,
     scenario: <Scenario st={st} />,
     holdings: <Holdings st={st} />,
   }[tab];
