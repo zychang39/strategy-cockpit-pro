@@ -7,4 +7,4 @@ instruments:
   2327.TW: {futures: true,  liquid: false, fname: 國巨期貨,   note: 深度中等——限價分批、避免市價單}
   6187.TWO: {futures: false, note: 無流通個股期 → 槓桿缺口用融資或質押}
   6223.TWO: {futures: false, note: 股期極淺 → 槓桿缺口用融資或質押}
-  6515.TWO: {futures: false, note: 無流通個股期 → 融資或質押}
+  6515.TW: {futures: false, note: 無流通個股期 → 融資或質押}
