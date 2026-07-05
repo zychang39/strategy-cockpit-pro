@@ -278,7 +278,7 @@ export function Orders({ st }) {
     settings: config.settings, options: data.options,
     instruments: config.instruments?.instruments, twMode: user.twMode,
   });
-  const diffs = diffHoldings(result.orders, user.holdings);
+  const diffs = diffHoldings(result.orders, user.holdings, data.quotes, data.fx, user.capital);
 
   const byTheme = new Map();
   for (const th of phase.themes) if ((th.tickers || []).length) byTheme.set(th.name, { theme: th, orders: [] });
@@ -310,21 +310,32 @@ export function Orders({ st }) {
           <div class="kv"><span class="k">現金保留（{(result.cashWeight * 100).toFixed(0)}%）</span><span class="v">{twd(result.cash)}</span></div>
           <div class="kv"><span class="k">目標總曝險</span><span class="v num">{(directive.exposure * 100).toFixed(0)}%</span></div>
         </div>
-        <div class="cap3">匯率時點：{data.fx?.fetched_at?.slice(0, 16).replace("T", " ")}　USD/TWD {num(data.fx?.USDTWD)}　JPY/TWD {num(data.fx?.JPYTWD, 4)}</div>
+        <div class="cap3" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span>匯率（每日隨行情更新 {data.fx?.fetched_at?.slice(5, 16).replace("T", " ")}）：</span>
+          <Sym s="TWD=X">USD/TWD {num(data.fx?.USDTWD)} ↗</Sym>
+          <Sym s="JPY=X">USD/JPY {num(data.quotes?.["JPY=X"]?.price)} ↗</Sym>
+          <span>JPY/TWD {num(data.fx?.JPYTWD, 4)}</span>
+        </div>
       </div>
 
       <div class="card">
-        <strong>與現況差異</strong>
-        <div class="cap3" style="margin-bottom:4px">對照「持倉」頁登記的實際部位</div>
+        <div class="row">
+          <strong>與現況差異</strong>
+          <span class="cap num">共 {diffs.length} 筆　合計 {twd(diffs.reduce((s2, d) => s2 + d.valueTwd, 0))}</span>
+        </div>
+        <div class="cap3" style="margin-bottom:4px">對照「持倉」頁登記的實際部位（金額基準——不足一張的零股缺口也列出）</div>
         {diffs.length === 0 ? (
           <div class="cap">✓ 與目標一致（或尚未登記持倉）</div>
         ) : (
           <div class="list">
             {diffs.map((d) => (
-              <div class="lrow" key={d.symbol}>
-                <Sym s={d.symbol}><strong>{d.symbol}</strong><span class="muted" style="font-size:12px">　{NAMES[d.symbol] || ""}</span></Sym>
-                <span class={"chip " + (d.action === "加碼" ? "chip-buy" : "chip-sell")}>
-                  {d.action === "加碼" ? "買進" : d.action === "減碼" ? "賣出" : d.action}　{num(d.shares, 0)} 股
+              <div class="lrow" key={d.symbol} style="align-items:center">
+                <div class="col" style="gap:0;flex:1">
+                  <Sym s={d.symbol}><strong>{d.symbol}</strong><span class="muted" style="font-size:12px">　{NAMES[d.symbol] || ""}</span></Sym>
+                  <span class="cap3 num">{twd(d.valueTwd)}　≈ US${num(d.valueUsd, 0)}{d.pctCap != null ? `　·　本金 ${d.pctCap.toFixed(1)}%` : ""}</span>
+                </div>
+                <span class={"chip " + (d.action === "買進" ? "chip-buy" : "chip-sell")}>
+                  {d.action}　{d.shares != null ? num(d.shares, 0) + " 股" : "零股/不足一張"}
                 </span>
               </div>
             ))}

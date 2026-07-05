@@ -19,6 +19,7 @@ export const NAMES = {
   "6187.TWO": "萬潤", "6223.TWO": "旺矽", MRAAY: "村田 ADR", KXIAY: "Kioxia ADR",
   CRDO: "Credo", NOK: "諾基亞", "6515.TW": "穎崴", IFNNY: "英飛凌 ADR",
   PANW: "Palo Alto", CRWD: "CrowdStrike", NET: "Cloudflare",
+  "TWD=X": "美元兌台幣 USD/TWD", "JPY=X": "美元兌日圓 USD/JPY",
 };
 
 const BASE = import.meta.env.BASE_URL || "./";
@@ -118,6 +119,7 @@ export function StockSheet({ sym, st, onClose }) {
           </div>
         )}
 
+        {!["fx", "indices"].includes(q?.category) && (
         <div class="card" style="margin-top:8px">
           <div class="cap" style="margin-bottom:6px">我的持倉</div>
           <div style="display:flex;gap:8px">
@@ -133,6 +135,7 @@ export function StockSheet({ sym, st, onClose }) {
                 {pct(pl.pct)}　{twd(pl.twd)}</span></div>
           )}
         </div>
+        )}
       </div>
     </div>
   );

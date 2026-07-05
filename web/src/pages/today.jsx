@@ -123,7 +123,7 @@ export function Today({ st }) {
       )}
 
       <div class="cap3" style="text-align:center;margin-top:8px">
-        資料更新：{fmtDate(data.generated_at)}　·　USD/TWD {num(data.fx?.USDTWD)}
+        資料更新：{fmtDate(data.generated_at)}　·　<Sym s="TWD=X">USD/TWD {num(data.fx?.USDTWD)} ↗</Sym>
       </div>
     </div>
   );

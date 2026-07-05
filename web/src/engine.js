@@ -242,20 +242,39 @@ export function buildOrders({ capital, directive, regime, rotation, phase, quote
   };
 }
 
-// ---- 與現況差異（對照追蹤頁登記的實際持倉）----
-export function diffHoldings(orders, holdings) {
+// ---- 與現況差異（金額基準：股數差為 0 的零股缺口也會列出）----
+export function diffHoldings(orders, holdings, quotes, fx, capital = 0) {
   const held = Object.fromEntries((holdings || []).map((h) => [h.symbol, h.shares]));
+  const usd = fx?.USDTWD || 32;
+  const rateOf = (q) => ({ us: fx?.USDTWD, jp: fx?.JPYTWD, tw: 1, two: 1 }[q?.category] ?? 1);
   const diffs = [];
   for (const o of orders) {
-    if (o.missing || o.shares == null) continue;
-    const cur = held[o.symbol] || 0;
-    const d = o.shares - cur;
-    if (d !== 0) diffs.push({ symbol: o.symbol, action: d > 0 ? "加碼" : "減碼", shares: Math.abs(d) });
+    if (o.missing) continue;
+    const q = o.quote;
+    const r = rateOf(q);
+    const heldSh = held[o.symbol] || 0;
+    const heldTwd = heldSh * (q?.price || 0) * r;
+    const dTwd = (o.targetValueTwd || 0) - heldTwd;       // 用未取整目標金額，零股缺口也可見
+    const dShares = (o.shares ?? 0) - heldSh;
     delete held[o.symbol];
+    if (Math.abs(dTwd) < Math.max(capital * 0.002, 1000)) continue;  // 忽略 <0.2% 的噪音
+    diffs.push({
+      symbol: o.symbol,
+      action: dTwd > 0 ? "買進" : "賣出",
+      shares: dShares !== 0 ? Math.abs(dShares) : null,   // null = 不足一張（零股/提高本金）
+      valueTwd: Math.abs(dTwd),
+      valueUsd: Math.abs(dTwd) / usd,
+      pctCap: capital ? (Math.abs(dTwd) / capital) * 100 : null,
+    });
   }
   for (const [sym, sh] of Object.entries(held)) {
-    if (sh > 0) diffs.push({ symbol: sym, action: "出清（不在本階段配置）", shares: sh });
+    if (sh <= 0) continue;
+    const q = quotes?.[sym];
+    const v = q?.price ? sh * q.price * rateOf(q) : 0;
+    diffs.push({ symbol: sym, action: "出清（不在本階段）", shares: sh,
+      valueTwd: v, valueUsd: v / usd, pctCap: capital ? (v / capital) * 100 : null });
   }
+  diffs.sort((a, b) => b.valueTwd - a.valueTwd);
   return diffs;
 }
 

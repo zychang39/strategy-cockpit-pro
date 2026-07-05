@@ -402,7 +402,7 @@ def main():
     if not args.skip_history:
         (DATA / "quotes").mkdir(parents=True, exist_ok=True)
         for sym, q in quotes.items():
-            if q.get("category") == "fx" or q.get("error"):
+            if q.get("error"):
                 continue
             h = fetch_ohlcv(sym)
             if h:
