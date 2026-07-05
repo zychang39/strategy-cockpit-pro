@@ -9,7 +9,9 @@
   "glue": false,
   "reduction_cap": null,
   "double_break": true,
+  "qqq_below30": true,
   "notes": [
+   "QQQ 破 30MA：現金 +20%、汰弱留強",
    "系統性回檔警示：channel check 改為每兩週"
   ],
   "regime_label": "減碼"

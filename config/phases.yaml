@@ -109,7 +109,7 @@ phases:
       - name: CPO 測試/封裝
         theme_key: cpo
         weight: 0.16
-        tickers: [TER, AMKR, 6187.TWO, 6223.TWO]
+        tickers: [TER, AMKR, 6187.TWO, 6223.TWO, 6515.TWO]
         hold: 9–15月
         exit: ""
       - name: 記憶體/HDD

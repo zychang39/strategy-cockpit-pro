@@ -82,6 +82,16 @@ export function Strategy({ st }) {
             <p class="quote">{sg.leverage.quote}</p>
             <p style="font-size:14px;line-height:19px">{sg.leverage.body}</p>
           </div>
+          {sg.philosophy && (
+            <div>
+              <h3 class="st">{sg.philosophy.title}</h3>
+              <div class="card">
+                {sg.philosophy.rules.map((r, i) => (
+                  <p key={i} style="font-size:14px;line-height:19px;margin-bottom:8px">・{r}</p>
+                ))}
+              </div>
+            </div>
+          )}
           <h3 class="st">{sg.exits.title}</h3>
           <div class="card">
             {sg.exits.rules.map((r, i) => (

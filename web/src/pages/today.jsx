@@ -87,8 +87,12 @@ export function Today({ st }) {
       {signals?.glue && (
         <div class="banner amber">◆ 均線黏合（|30MA−60MA| &lt; 5%）：單次減碼上限 20–30%，避免一根長黑一次砍 40%。</div>
       )}
+      {signals?.qqq_below30 && (
+        <div class="banner red">■ QQQ 破 30MA——大盤觸發：拉高現金 20%、先砍「線型最弱」的持股（跌到 120MA＝砍太慢）。
+          加回條件：站回 30MA 且第二個交易日尾盤守住。</div>
+      )}
       {signals?.double_break && (
-        <div class="banner amber">◆ 系統性回檔警示：SOX 與 QQQ 同破 30MA，channel check 改為每兩週。</div>
+        <div class="banner amber">◆ 費半與 QQQ 同破 30MA——「大家一起跌，不需要特別看 CSP」，照紀律減倉；channel check 改為每兩週。</div>
       )}
       {signals?.regime === "reduce" && (
         <div class="banner blue">◆ 減碼制度：跌破 30MA——先把槓桿歸 1.0×，再降現股倉位至 80%。不頭鐵、不逆勢。</div>

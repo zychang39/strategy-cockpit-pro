@@ -23,6 +23,7 @@ class Signals:
     glue: bool = False            # 均線黏合
     reduction_cap: float | None = None  # 黏合時單次減碼上限（0.20–0.30 取 0.25）
     double_break: bool = False    # SOX、QQQ 同 < 30MA
+    qqq_below30: bool = False     # QQQ < 30MA（不論 SOX）→ 現金 +20%、汰弱留強
     notes: list = field(default_factory=list)
 
     def to_dict(self):
@@ -53,7 +54,13 @@ def detect_regime(sox_close, sox_ma30, sox_ma60, qqq_close, qqq_ma30, qqq_ma60) 
         s.reduction_cap = 0.25
         s.notes.append("均線黏合：單次減碼上限 20–30%")
 
-    # 雙破防守
+    # QQQ 大盤觸發：破 30MA → 拉高現金 20%、先砍線型最弱；
+    # 站回 30MA 且第二個交易日尾盤守住 → 加回
+    if qqq_close < qqq_ma30:
+        s.qqq_below30 = True
+        s.notes.append("QQQ 破 30MA：現金 +20%、汰弱留強")
+
+    # 雙破：大家一起跌 → 不需特別看 CSP，照一般紀律減倉
     if (not above30) and qqq_close < qqq_ma30:
         s.double_break = True
         s.notes.append("系統性回檔警示：channel check 改為每兩週")

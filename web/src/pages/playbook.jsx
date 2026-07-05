@@ -9,10 +9,12 @@ const STATES = [
   { v: "done", label: "已執行" },
 ];
 
+const AUTO_SIGNALS = { rotation: (sig) => sig?.rotation, qqq_break: (sig) => sig?.qqq_below30 };
+
 function TriggerCard({ t, st }) {
   const { signals, user, setKv } = st;
-  const auto = t.auto === "rotation";
-  const autoFired = auto && signals?.rotation;
+  const auto = !!AUTO_SIGNALS[t.auto];
+  const autoFired = auto && AUTO_SIGNALS[t.auto](signals);
   const manual = user.triggers?.[t.id] || "waiting";
   const state = auto ? (autoFired ? "fired" : "waiting") : manual;
   const setState = (v) => setKv("triggers", { ...user.triggers, [t.id]: v });
@@ -48,16 +50,18 @@ export function Playbook({ st }) {
   const pb = config?.playbook;
   const [view, setView] = useState("triggers");
   if (!pb) return <h2 class="lt">劇本</h2>;
+  const AUTO = { rotation: st.signals?.rotation, qqq_break: st.signals?.qqq_below30 };
   const fired = pb.triggers.filter((t) =>
-    (t.auto === "rotation" && st.signals?.rotation) || st.user.triggers?.[t.id] === "fired");
+    (t.auto && AUTO[t.auto]) || st.user.triggers?.[t.id] === "fired");
 
   return (
     <div>
       <h2 class="lt">劇本</h2>
       <p class="cap" style="margin:-8px 0 12px">「若 A 發生 → 買 B」。輪動劇本由系統自動判定；其他事件發生時手動標「已觸發」，執行完標「已執行」。</p>
       <Segmented value={view} onChange={setView} options={[
-        { value: "triggers", label: `觸發劇本（${pb.triggers.length}）` },
-        { value: "author", label: "作者持倉快照" }]} />
+        { value: "triggers", label: `劇本（${pb.triggers.length}）` },
+        { value: "author", label: "作者持倉" },
+        { value: "avoid", label: "避開名單" }]} />
 
       {view === "triggers" && (
         <div style="margin-top:12px">
@@ -65,6 +69,18 @@ export function Playbook({ st }) {
             <div class="banner blue">⚡ {fired.length} 個劇本已觸發——行動列在卡片上。</div>
           )}
           {pb.triggers.map((t) => <TriggerCard key={t.id} t={t} st={st} />)}
+        </div>
+      )}
+
+      {view === "avoid" && (
+        <div style="margin-top:12px">
+          <div class="cap" style="margin-bottom:8px">明講避開或看淡的標的（非做空建議；AVGO/AAPL 等是點出風險而非禁持有）：</div>
+          {(pb.avoid || []).map((a) => (
+            <div class="card" key={a.t}>
+              <div class="row"><strong>{a.t}</strong><span class="badge warn">避開/看淡</span></div>
+              <p class="cap" style="margin-top:6px;color:var(--text-2);font-size:14px;line-height:19px">{a.why}</p>
+            </div>
+          ))}
         </div>
       )}
 

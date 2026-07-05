@@ -56,6 +56,12 @@ def test_glue_boundary_exactly_5pct():
 def test_double_break():
     s = detect_regime(95, 100, 90, 470, 480, 470)
     assert s.double_break is True and s.rotation is False
+    assert s.qqq_below30 is True
+
+def test_qqq_below30_alone():
+    """SOX 在 30MA 上、QQQ 破 → 只觸發大盤現金規則，不觸發雙破。"""
+    s = detect_regime(110, 100, 90, 470, 480, 470)
+    assert s.qqq_below30 is True and s.double_break is False
 
 
 # ---------------------------------------------------------------- 使用者端修飾
