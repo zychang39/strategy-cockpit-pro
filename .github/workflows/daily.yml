@@ -40,3 +40,5 @@ jobs:
         run: gh workflow run deploy.yml --ref ${{ github.ref_name }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+# touch: 觸發抓價 1783234144
