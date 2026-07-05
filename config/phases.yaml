@@ -6,42 +6,60 @@ phases:
     name: 階段①
     start: 2026-07-03
     end: 2026-09-30
-    themes:
+    themes:      # 依作者 2026 Q3 直播自揭配比重構（記憶體30/MLCC20/設備15-20/其他）
       - name: 記憶體/HDD
         theme_key: memory_hdd
         weight: 0.30
         tickers: [MU, SNDK, STX, WDC, KXIAY]
         hold: 12–24月
-        exit: HDD 報價 < $22/TB 或缺口收窄
+        exit: HDD 報價 < $22/TB 或缺口收窄；MU 毛利自 85% 下滑（margin peaking）
       - name: MLCC
         theme_key: mlcc
         weight: 0.20
-        tickers: [MRAAY, 2327.TW]
-        hold: 12–18月
-        exit: 提早擴產宣布或需求斷
+        tickers: [MRAAY]
+        hold: 12–18月（抱到 2027 年底擴產事件）
+        exit: 提早擴產宣布或需求斷（作者只做日系、台股 MLCC 沒做）
       - name: 半導體設備
         theme_key: equipment
-        weight: 0.18
-        tickers: [AMAT, ONTO, ASML, UCTT, KLIC]
+        weight: 0.16
+        tickers: [AMAT, ONTO]
         hold: 6–12月
-        exit: 台積電 CAPEX 指引下修
-      - name: 台股核心
+        exit: 台積電 CAPEX 指引下修（作者只挑這兩檔，AMAT 較多——A16 獨供）
+      - name: 封裝設備
+        theme_key: equipment
+        weight: 0.02
+        tickers: [KLIC]
+        hold: 6–12月
+        exit: 小倉「站票」；台積電認證失守即出
+      - name: CPU
         theme_key: default
-        weight: 0.17
-        tickers: [2330.TW, 2454.TW]
-        hold: 12–24月
-        exit: 個股破季線且論述惡化
-      - name: 光纖/其他
+        weight: 0.05
+        tickers: [INTC]
+        hold: 6–12月
+        exit: 伺服器 CPU 漲價循環結束
+      - name: 光纖/光通（低配）
+        theme_key: cpo
+        weight: 0.06
+        tickers: [GLW, COHR, CRDO]
+        hold: 6–12月
+        exit: 破線即砍（LITE/NOK 已砍出，待劇本觸發買回）
+      - name: 功率半導體
         theme_key: default
+        weight: 0.06
+        tickers: [IFNNY, WOLF]
+        hold: 12月+（2027 放量題材）
+        exit: 台達鏈份額變化；WOLF 破線即走
+      - name: 台股 CPO 測試
+        theme_key: cpo
         weight: 0.10
-        tickers: [GLW, INTC]
-        hold: 6–12月
-        exit: ""
+        tickers: [6223.TWO, 6515.TW, 6187.TWO]
+        hold: 9–15月
+        exit: 主倉旺矽+穎崴、萬潤較少；glass bridge 量產（2028 後）警訊
       - name: 現金
         weight: 0.05
         tickers: []
         hold: ""
-        exit: 留給 TER 財報回檔
+        exit: 留給 TER 財報回檔與光通買回
   - id: 2
     name: 階段②
     start: 2026-10-01
