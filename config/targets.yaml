@@ -33,3 +33,5 @@ targets:
   KXIAY: {bear: 33.8, base: 63.09, bull: 85.17, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 45.065 × 1.4（memory_hdd）
   MRAAY: {bear: 24.51, base: 44.12, bull: 59.56, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 32.68 × 1.35（mlcc）
   6515.TW: {bear: 7425.0, base: 14850.0, bull: 20047.5, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 9900.0 × 1.5（cpo）
+  CRDO: {bear: 181.43, base: 362.87, bull: 489.87, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 241.91 × 1.5（cpo）
+  IFNNY: {bear: 64.64, base: 103.42, bull: 139.62, thesis_expiry: 2028-07-03}  # 佔位初始值：現價 86.18 × 1.2（default）
