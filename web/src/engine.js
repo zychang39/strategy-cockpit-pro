@@ -143,14 +143,37 @@ export function currentPhase(phases, dateStr, overrideId = null) {
     || (d < String(list[0]?.start) ? list[0] : list[list.length - 1]);
 }
 
+// ---- 台股/美股市場配比縮放（保持總額不變，僅重分配） ----
+export function rescaleByMarket(alloc, quotes, twPct) {
+  let twSum = 0, usSum = 0;
+  for (const [sym, a] of Object.entries(alloc)) {
+    const cat = quotes?.[sym]?.category;
+    if (cat === "tw" || cat === "two") twSum += a.amount; else usSum += a.amount;
+  }
+  const tot = twSum + usSum;
+  if (!tot || twSum <= 0 || usSum <= 0) return alloc;   // 單邊為零無法縮放
+  const fTw = (tot * twPct / 100) / twSum;
+  const fUs = (tot * (100 - twPct) / 100) / usSum;
+  const out = {};
+  for (const [sym, a] of Object.entries(alloc)) {
+    const cat = quotes?.[sym]?.category;
+    out[sym] = { ...a, amount: a.amount * ((cat === "tw" || cat === "two") ? fTw : fUs) };
+  }
+  return out;
+}
+
 // ---- 下單頁主計算：每檔 → 目標市值/股數/限價/預期報酬/方案 A/B ----
-export function buildOrders({ capital, directive, regime, rotation, phase, quotes, fx, targets, settings, options, instruments, twMode = "mixed" }) {
+export function buildOrders({ capital, directive, regime, rotation, phase, quotes, fx, targets, settings, options, instruments, twMode = "mixed", splitMode = "auto", twPct = 35 }) {
   const brokers = settings?.brokers || {};
   const fut = brokers.tw?.futures;
   const { equity, gap } = splitLayers(capital, directive.exposure);
-  const eqAlloc = themeAlloc(phase.themes, equity, rotation);
-  const gapAlloc = regime === DEFENSE || directive.leverage <= 1
+  let eqAlloc = themeAlloc(phase.themes, equity, rotation);
+  let gapAlloc = regime === DEFENSE || directive.leverage <= 1
     ? {} : themeAlloc(phase.themes, gap, rotation);
+  if (splitMode === "custom") {
+    eqAlloc = rescaleByMarket(eqAlloc, quotes, twPct);
+    gapAlloc = rescaleByMarket(gapAlloc, quotes, twPct);
+  }
 
   const m = settings?.margin || {};
   const leapsCfg = settings?.leaps || {};
@@ -235,10 +258,17 @@ export function buildOrders({ capital, directive, regime, rotation, phase, quote
 
   const cashTheme = (phase.themes || []).find((t) => !(t.tickers || []).length);
   const investedEq = Object.values(eqAlloc).reduce((s, v) => s + v.amount, 0);
+  let marketTw = 0, marketUs = 0;
+  for (const o of orders) {
+    const cat = o.quote?.category;
+    const v = (o.targetValueTwd || 0) + (o.gapValueTwd || 0);
+    if (cat === "tw" || cat === "two") marketTw += v; else marketUs += v;
+  }
   return {
     orders, equity, gap,
     cash: capital - investedEq,
     cashWeight: cashTheme?.weight ?? 0,
+    marketTw, marketUs,
   };
 }
 
@@ -254,7 +284,7 @@ export function diffHoldings(orders, holdings, quotes, fx, capital = 0) {
     const r = rateOf(q);
     const heldSh = held[o.symbol] || 0;
     const heldTwd = heldSh * (q?.price || 0) * r;
-    const dTwd = (o.targetValueTwd || 0) - heldTwd;       // 用未取整目標金額，零股缺口也可見
+    const dTwd = ((o.targetValueTwd || 0) + (o.gapValueTwd || 0)) - heldTwd;  // 含槓桿層——槓桿改變即時反映
     const dShares = (o.shares ?? 0) - heldSh;
     delete held[o.symbol];
     if (Math.abs(dTwd) < Math.max(capital * 0.002, 1000)) continue;  // 忽略 <0.2% 的噪音

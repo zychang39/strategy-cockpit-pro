@@ -94,6 +94,42 @@ function ControlCard({ st, phase, phases, directive, signals, preview, setPrevie
       </div>
       <hr class="sep" />
 
+      {/* 台股/美股市場配比 */}
+      <div class="cap" style="margin-bottom:6px">台股／美股配比</div>
+      <Segmented value={user.splitMode} onChange={(v) => setKv("splitMode", v)} options={[
+        { value: "auto", label: "依主題權重（自動）" },
+        { value: "custom", label: "自訂比例" }]} />
+      {user.splitMode === "custom" && (() => {
+        const investable = user.capital * directive.exposure;
+        const twAmt = investable * user.twPct / 100;
+        const usAmt = investable - twAmt;
+        const setTw = (v) => setKv("twPct", Math.max(0, Math.min(100, Math.round(v))));
+        return (
+          <div style="margin-top:8px">
+            <div class="row">
+              <span class="cap">台股 <b class="num">{user.twPct}%</b></span>
+              <span class="cap">美股 <b class="num">{100 - user.twPct}%</b></span>
+            </div>
+            <input type="range" min="0" max="100" step="5" value={user.twPct}
+              onInput={(e) => setTw(Number(e.currentTarget.value))} />
+            <div class="grid2">
+              <div>
+                <div class="cap3">台股金額（改了自動換算比例）</div>
+                <input type="number" min="0" step="100000" value={Math.round(twAmt)}
+                  onChange={(e) => investable > 0 && setTw((Number(e.currentTarget.value) || 0) / investable * 100)} />
+              </div>
+              <div>
+                <div class="cap3">美股金額</div>
+                <input type="number" min="0" step="100000" value={Math.round(usAmt)}
+                  onChange={(e) => investable > 0 && setTw(100 - (Number(e.currentTarget.value) || 0) / investable * 100)} />
+              </div>
+            </div>
+            <div class="cap3" style="margin-top:4px">在市場內按原主題權重等比縮放（總額不變）。作者參考分法：美股 60–70%、台股 30–40%。</div>
+          </div>
+        );
+      })()}
+      <hr class="sep" />
+
       {/* 即時摘要 */}
       <div class="grid2">
         <div class="kv"><span class="k">制度</span><span class="v">{preview
@@ -277,6 +313,7 @@ export function Orders({ st }) {
     phase, quotes: data.quotes, fx: data.fx, targets: config.targets,
     settings: config.settings, options: data.options,
     instruments: config.instruments?.instruments, twMode: user.twMode,
+    splitMode: user.splitMode, twPct: user.twPct,
   });
   const diffs = diffHoldings(result.orders, user.holdings, data.quotes, data.fx, user.capital);
 
@@ -309,6 +346,8 @@ export function Orders({ st }) {
           <div class="kv"><span class="k">槓桿缺口</span><span class="v">{twd(result.gap)}</span></div>
           <div class="kv"><span class="k">現金保留（{(result.cashWeight * 100).toFixed(0)}%）</span><span class="v">{twd(result.cash)}</span></div>
           <div class="kv"><span class="k">目標總曝險</span><span class="v num">{(directive.exposure * 100).toFixed(0)}%</span></div>
+          <div class="kv"><span class="k">台股（含槓桿層）</span><span class="v num">{twd(result.marketTw)}（{result.marketTw + result.marketUs > 0 ? (result.marketTw / (result.marketTw + result.marketUs) * 100).toFixed(0) : 0}%）</span></div>
+          <div class="kv"><span class="k">美股（含槓桿層）</span><span class="v num">{twd(result.marketUs)}（{result.marketTw + result.marketUs > 0 ? (result.marketUs / (result.marketTw + result.marketUs) * 100).toFixed(0) : 0}%）</span></div>
         </div>
         <div class="cap3" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <span>匯率（每日隨行情更新 {data.fx?.fetched_at?.slice(5, 16).replace("T", " ")}）：</span>
