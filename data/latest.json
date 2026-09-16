@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-15T11:59:48+00:00",
+ "generated_at": "2026-09-16T00:44:03+00:00",
  "sample": false,
  "signals": {
   "regime": "defense",
@@ -19,22 +19,21 @@
   "regime_label": "防守"
  },
  "fx": {
-  "USDTWD": 31.809,
-  "JPYTWD": 0.2054,
-  "fetched_at": "2026-09-15T11:59:37+00:00"
+  "USDTWD": 31.803,
+  "JPYTWD": 0.2048,
+  "fetched_at": "2026-09-16T00:43:55+00:00"
  },
  "quotes": {
   "^SOX": {
    "symbol": "^SOX",
    "category": "indices",
-   "price": 11131.2803,
-   "prev_close": 11824.0,
-   "change_pct": -5.86,
-   "ma20": 11675.265,
-   "ma30": 11829.801,
-   "ma60": 12214.5016,
+   "price": 11175.5469,
+   "prev_close": 11131.2803,
+   "change_pct": 0.4,
+   "ma20": 11602.9924,
+   "ma30": 11821.3076,
+   "ma60": 12161.7311,
    "spark": [
-    11472.75,
     11160.9902,
     11775.5,
     12081.04,
@@ -123,11 +122,12 @@
     11931.3203,
     11614.1699,
     11824.0,
-    11131.2803
+    11131.2803,
+    11175.5469
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:22+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "QQQ": {
@@ -233,7 +233,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:22+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "MU": {
@@ -339,7 +339,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:23+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "SNDK": {
@@ -445,7 +445,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:23+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "STX": {
@@ -551,7 +551,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:23+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "WDC": {
@@ -657,7 +657,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:23+00:00",
+   "fetched_at": "2026-09-16T00:43:26+00:00",
    "error": null
   },
   "TER": {
@@ -763,7 +763,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:24+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "LITE": {
@@ -869,7 +869,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:24+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "COHR": {
@@ -975,7 +975,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:24+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "MRVL": {
@@ -1081,7 +1081,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "ALAB": {
@@ -1187,7 +1187,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "AMKR": {
@@ -1293,7 +1293,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "GOOGL": {
@@ -1399,7 +1399,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "AMZN": {
@@ -1505,7 +1505,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "NVDA": {
@@ -1611,7 +1611,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:25+00:00",
+   "fetched_at": "2026-09-16T00:43:27+00:00",
    "error": null
   },
   "AVGO": {
@@ -1717,7 +1717,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:26+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "GLW": {
@@ -1823,7 +1823,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:26+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "INTC": {
@@ -1929,7 +1929,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:26+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "AMAT": {
@@ -2035,7 +2035,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:26+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "ONTO": {
@@ -2141,7 +2141,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:26+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "ASML": {
@@ -2247,7 +2247,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:27+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "UCTT": {
@@ -2353,7 +2353,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:27+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "KLIC": {
@@ -2459,7 +2459,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:27+00:00",
+   "fetched_at": "2026-09-16T00:43:28+00:00",
    "error": null
   },
   "BB": {
@@ -2565,7 +2565,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:27+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "WOLF": {
@@ -2671,7 +2671,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "CRDO": {
@@ -2777,7 +2777,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "NOK": {
@@ -2883,20 +2883,19 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "MRAAY": {
    "symbol": "MRAAY",
    "category": "us",
-   "price": 23.01,
-   "prev_close": 24.24,
-   "change_pct": -5.07,
-   "ma20": 22.9385,
-   "ma30": 23.2967,
-   "ma60": 26.144,
+   "price": 23.94,
+   "prev_close": 23.01,
+   "change_pct": 4.04,
+   "ma20": 22.834,
+   "ma30": 23.3333,
+   "ma60": 25.9272,
    "spark": [
-    17.24,
     17.73,
     18.77,
     19.07,
@@ -2985,11 +2984,12 @@
     22.88,
     23.89,
     24.24,
-    23.01
+    23.01,
+    23.94
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "KXIAY": {
@@ -3095,20 +3095,19 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "IFNNY": {
    "symbol": "IFNNY",
    "category": "us",
-   "price": 62.14,
-   "prev_close": 67.57,
-   "change_pct": -8.04,
-   "ma20": 65.439,
-   "ma30": 67.5213,
-   "ma60": 74.3455,
+   "price": 62.55,
+   "prev_close": 62.14,
+   "change_pct": 0.66,
+   "ma20": 64.9895,
+   "ma30": 67.233,
+   "ma60": 73.8008,
    "spark": [
-    70.1,
     68.76,
     73.4,
     72.6,
@@ -3197,11 +3196,12 @@
     66.08,
     64.29,
     67.57,
-    62.14
+    62.14,
+    62.55
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:28+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "PANW": {
@@ -3307,7 +3307,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:29+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "CRWD": {
@@ -3413,7 +3413,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:29+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "NET": {
@@ -3519,15 +3519,15 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:29+00:00",
+   "fetched_at": "2026-09-16T00:43:29+00:00",
    "error": null
   },
   "6515.TW": {
    "symbol": "6515.TW",
    "category": "tw",
-   "price": 6600.0,
+   "price": 6310.0,
    "prev_close": 6600.0,
-   "change_pct": 0.0,
+   "change_pct": -4.39,
    "ma20": 6661.25,
    "ma30": 6699.5,
    "ma60": 7006.5833,
@@ -3624,16 +3624,16 @@
     6310.0
    ],
    "partial": false,
-   "source": "yfinance+official-close",
-   "fetched_at": "2026-09-15T11:59:29+00:00",
+   "source": "yfinance",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "2330.TW": {
    "symbol": "2330.TW",
    "category": "tw",
-   "price": 2380.0,
+   "price": 2385.0,
    "prev_close": 2380.0,
-   "change_pct": 0.0,
+   "change_pct": 0.21,
    "ma20": 2410.25,
    "ma30": 2404.8333,
    "ma60": 2395.8333,
@@ -3730,16 +3730,16 @@
     2385.0
    ],
    "partial": false,
-   "source": "yfinance+official-close",
-   "fetched_at": "2026-09-15T11:59:29+00:00",
+   "source": "yfinance",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "2454.TW": {
    "symbol": "2454.TW",
    "category": "tw",
-   "price": 4560.0,
+   "price": 4430.0,
    "prev_close": 4560.0,
-   "change_pct": 0.0,
+   "change_pct": -2.85,
    "ma20": 4214.5,
    "ma30": 4149.1667,
    "ma60": 3991.1667,
@@ -3836,16 +3836,16 @@
     4430.0
    ],
    "partial": false,
-   "source": "yfinance+official-close",
-   "fetched_at": "2026-09-15T11:59:30+00:00",
+   "source": "yfinance",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "2327.TW": {
    "symbol": "2327.TW",
    "category": "tw",
-   "price": 545.0,
+   "price": 537.0,
    "prev_close": 545.0,
-   "change_pct": 0.0,
+   "change_pct": -1.47,
    "ma20": 556.05,
    "ma30": 568.9667,
    "ma60": 687.6583,
@@ -3942,16 +3942,16 @@
     537.0
    ],
    "partial": false,
-   "source": "yfinance+official-close",
-   "fetched_at": "2026-09-15T11:59:30+00:00",
+   "source": "yfinance",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "2308.TW": {
    "symbol": "2308.TW",
    "category": "tw",
-   "price": 1620.0,
+   "price": 1670.0,
    "prev_close": 1620.0,
-   "change_pct": 0.0,
+   "change_pct": 3.09,
    "ma20": 1755.5,
    "ma30": 1765.8333,
    "ma60": 1795.8333,
@@ -4048,8 +4048,8 @@
     1670.0
    ],
    "partial": false,
-   "source": "yfinance+official-close",
-   "fetched_at": "2026-09-15T11:59:30+00:00",
+   "source": "yfinance",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "6187.TWO": {
@@ -4155,7 +4155,7 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:30+00:00",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "6223.TWO": {
@@ -4261,20 +4261,19 @@
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:30+00:00",
+   "fetched_at": "2026-09-16T00:43:30+00:00",
    "error": null
   },
   "TWD=X": {
    "symbol": "TWD=X",
    "category": "fx",
-   "price": 31.809,
-   "prev_close": 31.6762,
-   "change_pct": 0.42,
-   "ma20": 31.7049,
-   "ma30": 31.8601,
-   "ma60": 31.9959,
+   "price": 31.803,
+   "prev_close": 31.7176,
+   "change_pct": 0.27,
+   "ma20": 31.6964,
+   "ma30": 31.8373,
+   "ma60": 31.9961,
    "spark": [
-    31.5011,
     31.559,
     31.5644,
     31.587,
@@ -4363,24 +4362,24 @@
     31.464,
     31.635,
     31.6762,
-    31.809
+    31.7176,
+    31.803
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:31+00:00",
+   "fetched_at": "2026-09-16T00:43:31+00:00",
    "error": null
   },
   "JPY=X": {
    "symbol": "JPY=X",
    "category": "fx",
-   "price": 154.895,
-   "prev_close": 153.424,
-   "change_pct": 0.96,
-   "ma20": 157.3552,
-   "ma30": 157.8144,
-   "ma60": 159.9435,
+   "price": 155.277,
+   "prev_close": 154.385,
+   "change_pct": 0.58,
+   "ma20": 157.116,
+   "ma30": 157.7169,
+   "ma60": 159.8297,
    "spark": [
-    157.671,
     157.851,
     158.382,
     158.844,
@@ -4469,20 +4468,56 @@
     153.573,
     154.482,
     153.424,
-    154.895
+    154.385,
+    155.277
    ],
    "partial": false,
    "source": "yfinance",
-   "fetched_at": "2026-09-15T11:59:31+00:00",
+   "fetched_at": "2026-09-16T00:43:31+00:00",
    "error": null
   }
  },
  "options": {
-  "GOOGL": null,
-  "AMZN": null,
-  "NVDA": null,
-  "MU": null,
+  "GOOGL": {
+   "expiry": "2027-09-17",
+   "strike": 280.0,
+   "mid": 93.1,
+   "delta_est": 0.79,
+   "iv": 0.464,
+   "fetched_at": "2026-09-16T00:43:55+00:00"
+  },
+  "AMZN": {
+   "expiry": "2027-07-16",
+   "strike": 205.0,
+   "mid": 62.58,
+   "delta_est": 0.786,
+   "iv": 0.476,
+   "fetched_at": "2026-09-16T00:43:55+00:00"
+  },
+  "NVDA": {
+   "expiry": "2027-09-17",
+   "strike": 170.0,
+   "mid": 61.4,
+   "delta_est": 0.78,
+   "iv": 0.501,
+   "fetched_at": "2026-09-16T00:43:55+00:00"
+  },
+  "MU": {
+   "expiry": "2027-09-17",
+   "strike": 740.0,
+   "mid": 318.35,
+   "delta_est": 0.769,
+   "iv": 0.648,
+   "fetched_at": "2026-09-16T00:43:55+00:00"
+  },
   "TER": null,
-  "AVGO": null
+  "AVGO": {
+   "expiry": "2027-09-17",
+   "strike": 280.0,
+   "mid": 94.75,
+   "delta_est": 0.773,
+   "iv": 0.511,
+   "fetched_at": "2026-09-16T00:43:56+00:00"
+  }
  }
 }
